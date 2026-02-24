@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Review & Rewrite Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+    <style>
+        body {
+            background: #0b1121;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            color: #e2e8f0;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+        .code-editor {
+            background: #0d1117;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            tab-size: 4;
+            resize: none;
+        }
+        .code-editor:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+            outline: none;
+        }
+        .glow-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glow-btn:hover {
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.5);
+            transform: translateY(-1px);
+        }
+        .glow-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .secondary-btn {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        .secondary-btn:hover {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: #6366f1;
+        }
+        .badge-critical { background: #dc2626; color: white; }
+        .badge-high { background: #ea580c; color: white; }
+        .badge-medium { background: #ca8a04; color: white; }
+        .badge-low { background: #16a34a; color: white; }
+        .result-panel {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+        .result-panel pre code {
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .tab-btn {
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active {
+            color: #818cf8;
+            border-bottom-color: #6366f1;
+        }
+        .chip {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .chip.selected {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+            color: #a5b4fc;
+        }
+        .chip:hover { border-color: #818cf8; }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .copy-toast {
+            animation: fadeInOut 2s ease forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Markdown rendering */
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 { color: #c7d2fe; margin-top: 1.2em; margin-bottom: 0.5em; font-weight: 600; }
+        .markdown-body h2 { font-size: 1.25rem; border-bottom: 1px solid rgba(99,102,241,0.2); padding-bottom: 0.4em; }
+        .markdown-body h3 { font-size: 1.1rem; }
+        .markdown-body p { margin-bottom: 0.7em; line-height: 1.7; }
+        .markdown-body ul, .markdown-body ol { padding-left: 1.5em; margin-bottom: 0.7em; }
+        .markdown-body li { margin-bottom: 0.3em; }
+        .markdown-body strong { color: #e0e7ff; }
+        .markdown-body code { background: rgba(99,102,241,0.15); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        .markdown-body pre { margin: 0.8em 0; border-radius: 8px; overflow: auto; }
+        .markdown-body pre code { background: transparent; padding: 0; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="glass-panel sticky top-0 z-50 border-b border-indigo-500/10">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                    <span class="text-xl">🤖</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-tight">CodeRefine AI</h1>
+                    <p class="text-xs text-slate-400">AI Code Review & Rewrite Agent</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-slate-500 hidden sm:inline">Powered by Groq × Llama 3.3 70B</span>
+                <a href="/" class="text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Input Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Code Input -->
+            <div class="lg:col-span-2">
+                <div class="glass-panel rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-lg font-semibold text-white">
+                            <i class="fas fa-code mr-2 text-indigo-400"></i>Source Code
+                        </h2>
+                        <button onclick="clearCode()" class="text-slate-400 hover:text-red-400 text-sm transition-colors">
+                            <i class="fas fa-trash-alt mr-1"></i>Clear
+                        </button>
+                    </div>
+                    <textarea id="codeInput" class="code-editor w-full h-80 rounded-lg p-4 text-slate-200 placeholder-slate-600"
+                        placeholder="// Paste your code here...&#10;// The AI agent will review it for bugs, performance issues, security risks, and best practice violations.&#10;&#10;def example():&#10;    pass"></textarea>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="lg:col-span-1">
+                <div class="glass-panel rounded-xl p-5 h-full flex flex-col">
+                    <h2 class="text-lg font-semibold text-white mb-4">
+                        <i class="fas fa-sliders-h mr-2 text-indigo-400"></i>Settings
+                    </h2>
+
+                    <!-- Language selector -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Programming Language</label>
+                        <select id="langSelect" class="w-full px-3 py-2.5 rounded-lg bg-slate-900/80 border border-indigo-500/20 text-slate-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="c">C</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="go">Go</option>
+                            <option value="rust">Rust</option>
+                            <option value="php">PHP</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="swift">Swift</option>
+                            <option value="kotlin">Kotlin</option>
+                        </select>
+                    </div>
+
+                    <!-- Focus Areas -->
+                    <div class="mb-5 flex-grow">
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Focus Areas</label>
+                        <div class="flex flex-wrap gap-2" id="focusChips">
+                            <span class="chip selected rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="bugs">
+                                <i class="fas fa-bug mr-1"></i>Bugs
+                            </span>
+                            <span class="chip selected rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="performance">
+                                <i class="fas fa-bolt mr-1"></i>Performance
+                            </span>
+                            <span class="chip selected rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="security">
+                                <i class="fas fa-shield-alt mr-1"></i>Security
+                            </span>
+                            <span class="chip rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="best practices">
+                                <i class="fas fa-check-circle mr-1"></i>Best Practices
+                            </span>
+                            <span class="chip rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="readability">
+                                <i class="fas fa-eye mr-1"></i>Readability
+                            </span>
+                            <span class="chip rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="error handling">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>Error Handling
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3 mt-auto">
+                        <button id="reviewBtn" onclick="reviewCode()" class="glow-btn w-full py-3 rounded-xl text-white font-semibold">
+                            <i class="fas fa-search mr-2"></i>Review Code
+                        </button>
+                        <button id="rewriteBtn" onclick="rewriteCode()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold">
+                            <i class="fas fa-magic mr-2"></i>Rewrite Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            <!-- Tabs -->
+            <div class="flex items-center gap-6 mb-4 border-b border-slate-700/50 pb-1">
+                <button class="tab-btn active text-sm font-medium py-2 text-slate-300" onclick="switchTab('review')" id="tabReview">
+                    <i class="fas fa-clipboard-check mr-1.5"></i>Review Results
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('rewrite')" id="tabRewrite">
+                    <i class="fas fa-code-branch mr-1.5"></i>Rewritten Code
+                </button>
+            </div>
+
+            <!-- Review Tab -->
+            <div id="panelReview">
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5" id="summaryCards">
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-red-400" id="criticalCount">0</div>
+                        <div class="text-xs text-slate-400 mt-1">Critical</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-orange-400" id="highCount">0</div>
+                        <div class="text-xs text-slate-400 mt-1">High</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-yellow-400" id="mediumCount">0</div>
+                        <div class="text-xs text-slate-400 mt-1">Medium</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-green-400" id="lowCount">0</div>
+                        <div class="text-xs text-slate-400 mt-1">Low</div>
+                    </div>
+                </div>
+
+                <!-- Review Content -->
+                <div class="result-panel rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white"><i class="fas fa-file-alt mr-2 text-indigo-400"></i>Detailed Review</h3>
+                        <button onclick="copyContent('reviewContent')" class="text-slate-400 hover:text-indigo-400 text-sm transition-colors">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="reviewContent" class="markdown-body text-slate-300 text-sm leading-relaxed"></div>
+                </div>
+            </div>
+
+            <!-- Rewrite Tab -->
+            <div id="panelRewrite" class="hidden">
+                <div class="result-panel rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white"><i class="fas fa-wand-magic-sparkles mr-2 text-indigo-400"></i>Optimized Code</h3>
+                        <button onclick="copyContent('rewriteContent')" class="text-slate-400 hover:text-indigo-400 text-sm transition-colors">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="rewriteContent" class="markdown-body text-slate-300 text-sm leading-relaxed"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+            <div class="glass-panel rounded-2xl p-8 text-center max-w-sm mx-4">
+                <div class="spinner inline-block w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full mb-4"></div>
+                <p class="text-white font-medium text-lg" id="loadingText">Analyzing your code...</p>
+                <p class="text-slate-400 text-sm mt-2">Powered by Llama 3.3 70B</p>
+            </div>
+        </div>
+
+        <!-- Copy Toast -->
+        <div id="copyToast" class="hidden fixed bottom-8 right-8 bg-green-600 text-white px-5 py-3 rounded-xl shadow-lg z-50 copy-toast">
+            <i class="fas fa-check-circle mr-2"></i>Copied to clipboard!
+        </div>
+    </main>
+
+    <script>
+        // Configure marked.js
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(code, { language: lang }).value;
+                }
+                return hljs.highlightAuto(code).value;
+            },
+            breaks: true
+        });
+
+        // Focus chip toggle
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => chip.classList.toggle('selected'));
+        });
+
+        function getSelectedFocusAreas() {
+            return Array.from(document.querySelectorAll('.chip.selected')).map(c => c.dataset.area);
+        }
+
+        function clearCode() {
+            document.getElementById('codeInput').value = '';
+        }
+
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        function switchTab(tab) {
+            const reviewTab = document.getElementById('tabReview');
+            const rewriteTab = document.getElementById('tabRewrite');
+            const reviewPanel = document.getElementById('panelReview');
+            const rewritePanel = document.getElementById('panelRewrite');
+
+            if (tab === 'review') {
+                reviewTab.classList.add('active');
+                reviewTab.classList.remove('text-slate-500');
+                reviewTab.classList.add('text-slate-300');
+                rewriteTab.classList.remove('active');
+                rewriteTab.classList.add('text-slate-500');
+                rewriteTab.classList.remove('text-slate-300');
+                reviewPanel.classList.remove('hidden');
+                rewritePanel.classList.add('hidden');
+            } else {
+                rewriteTab.classList.add('active');
+                rewriteTab.classList.remove('text-slate-500');
+                rewriteTab.classList.add('text-slate-300');
+                reviewTab.classList.remove('active');
+                reviewTab.classList.add('text-slate-500');
+                reviewTab.classList.remove('text-slate-300');
+                rewritePanel.classList.remove('hidden');
+                reviewPanel.classList.add('hidden');
+            }
+        }
+
+        function copyContent(elementId) {
+            const el = document.getElementById(elementId);
+            const text = el.innerText || el.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.classList.remove('hidden');
+                setTimeout(() => toast.classList.add('hidden'), 2200);
+            });
+        }
+
+        async function reviewCode() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to review.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+            const focusAreas = getSelectedFocusAreas();
+
+            showLoading('Reviewing your code...');
+            document.getElementById('reviewBtn').disabled = true;
+
+            try {
+                const response = await fetch('/review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language, focus_areas: focusAreas })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Review failed');
+                }
+
+                const data = await response.json();
+
+                // Update summary counts
+                document.getElementById('criticalCount').textContent = data.summary.critical.count;
+                document.getElementById('highCount').textContent = data.summary.high.count;
+                document.getElementById('mediumCount').textContent = data.summary.medium.count;
+                document.getElementById('lowCount').textContent = data.summary.low.count;
+
+                // Render review markdown
+                document.getElementById('reviewContent').innerHTML = marked.parse(data.review);
+                // Apply highlight.js to code blocks
+                document.querySelectorAll('#reviewContent pre code').forEach(block => hljs.highlightElement(block));
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('review');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('reviewBtn').disabled = false;
+            }
+        }
+
+        async function rewriteCode() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to rewrite.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+
+            showLoading('Rewriting & optimizing your code...');
+            document.getElementById('rewriteBtn').disabled = true;
+
+            try {
+                const response = await fetch('/rewrite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Rewrite failed');
+                }
+
+                const data = await response.json();
+
+                // Render rewritten code markdown
+                document.getElementById('rewriteContent').innerHTML = marked.parse(data.rewritten);
+                document.querySelectorAll('#rewriteContent pre code').forEach(block => hljs.highlightElement(block));
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('rewrite');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('rewriteBtn').disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
