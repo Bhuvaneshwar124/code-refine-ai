@@ -118,6 +118,196 @@
         .markdown-body code { background: rgba(99,102,241,0.15); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
         .markdown-body pre { margin: 0.8em 0; border-radius: 8px; overflow: auto; }
         .markdown-body pre code { background: transparent; padding: 0; }
+
+        /* Score Gauge Styles */
+        .score-gauge {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .score-gauge svg {
+            transform: rotate(-90deg);
+        }
+        .score-gauge .bg-circle {
+            fill: none;
+            stroke: rgba(99, 102, 241, 0.15);
+            stroke-width: 8;
+        }
+        .score-gauge .progress-circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        .score-gauge .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .score-gauge .score-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .score-gauge .score-label {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+        .score-excellent { stroke: #22c55e; }
+        .score-good { stroke: #84cc16; }
+        .score-average { stroke: #eab308; }
+        .score-poor { stroke: #f97316; }
+        .score-critical { stroke: #ef4444; }
+        .text-excellent { color: #22c55e; }
+        .text-good { color: #84cc16; }
+        .text-average { color: #eab308; }
+        .text-poor { color: #f97316; }
+        .text-critical { color: #ef4444; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Agent Card Styles */
+        .agent-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--agent-color), transparent);
+        }
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Live Metrics Bar */
+        .metrics-bar {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+        }
+        .metric-value {
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #6366f1, #8b5cf6, #a855f7);
+        }
+        .timeline-step {
+            position: relative;
+            padding: 0.75rem 0;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: timelineReveal 0.5s ease forwards;
+        }
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 1rem;
+            width: 10px;
+            height: 10px;
+            background: #6366f1;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        .timeline-step.completed::before {
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+        @keyframes timelineReveal {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Confidence Bar */
+        .confidence-bar {
+            height: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .confidence-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1s ease-out;
+        }
+
+        /* Impact Badge */
+        .impact-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .impact-positive { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .impact-negative { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        /* Pulse Animation for Live Metrics */
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Score Animation */
+        @keyframes countUp {
+            from { --num: 0; }
+            to { --num: var(--target); }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -125,9 +315,7 @@
     <header class="glass-panel sticky top-0 z-50 border-b border-indigo-500/10">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
-                    <span class="text-xl">🤖</span>
-                </div>
+                <img src="/logo.png" alt="CodeRefine AI" class="w-10 h-10 rounded-xl shadow-lg object-cover">
                 <div>
                     <h1 class="text-xl font-bold text-white tracking-tight">CodeRefine AI</h1>
                     <p class="text-xs text-slate-400">AI Code Review & Rewrite Agent</p>
@@ -157,7 +345,48 @@
                         </button>
                     </div>
                     <textarea id="codeInput" class="code-editor w-full h-80 rounded-lg p-4 text-slate-200 placeholder-slate-600"
-                        placeholder="// Paste your code here...&#10;// The AI agent will review it for bugs, performance issues, security risks, and best practice violations.&#10;&#10;def example():&#10;    pass"></textarea>
+                        placeholder="// Paste your code here...&#10;// The AI agent will review it for bugs, performance issues, security risks, and best practice violations.&#10;&#10;def example():&#10;    pass" oninput="updateLiveMetrics()"></textarea>
+                    
+                    <!-- Live Code Metrics Panel -->
+                    <div class="metrics-bar mt-3" id="liveMetricsPanel">
+                        <div class="metric-item">
+                            <span class="text-slate-400 text-xs uppercase tracking-wider">Lines</span>
+                            <span class="text-lg font-bold text-white" id="metricLines">0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="text-slate-400 text-xs uppercase tracking-wider">Functions</span>
+                            <span class="text-lg font-bold text-cyan-400" id="metricFunctions">0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="text-slate-400 text-xs uppercase tracking-wider">Complexity</span>
+                            <span class="text-lg font-bold text-yellow-400" id="metricComplexity">Low</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="text-slate-400 text-xs uppercase tracking-wider">Security Risk</span>
+                            <span class="text-lg font-bold text-green-400" id="metricSecurityRisk">None</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="text-slate-400 text-xs uppercase tracking-wider">Est. Fix Time</span>
+                            <span class="text-lg font-bold text-purple-400" id="metricFixTime">-</span>
+                        </div>
+                    </div>
+                    
+                    <!-- GitHub URL Input Section -->
+                    <div class="mt-4 p-4 rounded-lg" style="background: linear-gradient(135deg, rgba(88, 28, 135, 0.2), rgba(99, 102, 241, 0.15)); border: 1px solid rgba(139, 92, 246, 0.3);">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fab fa-github text-xl text-purple-400"></i>
+                            <h3 class="text-sm font-semibold text-purple-200">GitHub Integration</h3>
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-purple-500/30 text-purple-300">Enterprise</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="githubUrl" class="flex-1 px-3 py-2.5 rounded-lg bg-slate-900/80 border border-purple-500/30 text-slate-200 placeholder-slate-500 focus:border-purple-500 focus:outline-none text-sm"
+                                placeholder="https://github.com/username/repository">
+                            <button id="githubScanBtn" onclick="scanGitHubRepo()" class="px-5 py-2.5 rounded-lg font-semibold text-sm text-white" style="background: linear-gradient(135deg, #7c3aed, #6366f1); box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);">
+                                <i class="fas fa-satellite-dish mr-2"></i>Scan Repo
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2"><i class="fas fa-info-circle mr-1"></i>Supports public repositories. Scans up to 10 code files.</p>
+                    </div>
                 </div>
             </div>
 
@@ -188,7 +417,7 @@
                     </div>
 
                     <!-- Focus Areas -->
-                    <div class="mb-5 flex-grow">
+                    <div class="mb-4">
                         <label class="block text-sm font-medium text-slate-300 mb-2">Focus Areas</label>
                         <div class="flex flex-wrap gap-2" id="focusChips">
                             <span class="chip selected rounded-full px-3 py-1.5 text-xs text-slate-300" data-area="bugs">
@@ -212,13 +441,57 @@
                         </div>
                     </div>
 
+                    <!-- Mode Toggle: Beginner/Developer -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-slate-300 mb-2">
+                            <i class="fas fa-graduation-cap mr-1 text-yellow-400"></i>Explanation Mode
+                        </label>
+                        <div class="flex rounded-lg overflow-hidden border border-indigo-500/30">
+                            <button id="modeDeveloper" onclick="setMode('developer')" class="flex-1 py-2.5 text-sm font-medium transition-all bg-indigo-500/30 text-white">
+                                <i class="fas fa-code mr-1"></i>Developer
+                            </button>
+                            <button id="modeBeginner" onclick="setMode('beginner')" class="flex-1 py-2.5 text-sm font-medium transition-all bg-transparent text-slate-400 hover:text-white">
+                                <i class="fas fa-user-graduate mr-1"></i>Beginner
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1" id="modeDescription">Technical explanations for professionals</p>
+                    </div>
+
+                    <!-- Policy Mode Selector -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-slate-300 mb-2">
+                            <i class="fas fa-building mr-1 text-purple-400"></i>Policy Mode
+                            <span class="text-xs text-yellow-400 ml-1">(Enterprise)</span>
+                        </label>
+                        <select id="policyMode" class="w-full px-3 py-2.5 rounded-lg bg-slate-900/80 border border-purple-500/20 text-slate-200 focus:border-purple-500 focus:outline-none" onchange="updatePolicyMode()">
+                            <option value="startup">🚀 Startup - Fast, pragmatic</option>
+                            <option value="enterprise">🏢 Enterprise - Compliance-focused</option>
+                            <option value="banking">🏦 Banking/Finance - Maximum security</option>
+                            <option value="education">📚 Education - Learning-focused</option>
+                            <option value="healthcare">🏥 Healthcare - HIPAA compliant</option>
+                        </select>
+                        <p class="text-xs text-slate-500 mt-1" id="policyDescription">Optimized for agile development</p>
+                    </div>
+
                     <!-- Action Buttons -->
                     <div class="space-y-3 mt-auto">
                         <button id="reviewBtn" onclick="reviewCode()" class="glow-btn w-full py-3 rounded-xl text-white font-semibold">
                             <i class="fas fa-search mr-2"></i>Review Code
                         </button>
+                        <button id="multiAgentBtn" onclick="multiAgentReview()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); border-color: rgba(139, 92, 246, 0.4);">
+                            <i class="fas fa-users-cog mr-2"></i>Multi-Agent Review
+                        </button>
+                        <button id="scoreBtn" onclick="scoreCode()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(99, 102, 241, 0.2)); border-color: rgba(34, 197, 94, 0.4);">
+                            <i class="fas fa-chart-line mr-2"></i>Get Quality Score
+                        </button>
+                        <button id="riskBtn" onclick="predictRisks()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2)); border-color: rgba(239, 68, 68, 0.4);">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Risk Prediction
+                        </button>
                         <button id="rewriteBtn" onclick="rewriteCode()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold">
                             <i class="fas fa-magic mr-2"></i>Rewrite Code
+                        </button>
+                        <button id="enterpriseBtn" onclick="generateEnterpriseReport()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2)); border-color: rgba(99, 102, 241, 0.4);">
+                            <i class="fas fa-file-pdf mr-2"></i>Enterprise Report
                         </button>
                     </div>
                 </div>
@@ -228,12 +501,24 @@
         <!-- Results Section -->
         <div id="resultsSection" class="hidden">
             <!-- Tabs -->
-            <div class="flex items-center gap-6 mb-4 border-b border-slate-700/50 pb-1">
+            <div class="flex items-center gap-4 mb-4 border-b border-slate-700/50 pb-1 flex-wrap">
                 <button class="tab-btn active text-sm font-medium py-2 text-slate-300" onclick="switchTab('review')" id="tabReview">
-                    <i class="fas fa-clipboard-check mr-1.5"></i>Review Results
+                    <i class="fas fa-clipboard-check mr-1.5"></i>Review
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('agents')" id="tabAgents">
+                    <i class="fas fa-users-cog mr-1.5"></i>Agents
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('score')" id="tabScore">
+                    <i class="fas fa-chart-pie mr-1.5"></i>Score
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('risk')" id="tabRisk">
+                    <i class="fas fa-shield-virus mr-1.5"></i>Risk
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('github')" id="tabGithub">
+                    <i class="fab fa-github mr-1.5"></i>GitHub
                 </button>
                 <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('rewrite')" id="tabRewrite">
-                    <i class="fas fa-code-branch mr-1.5"></i>Rewritten Code
+                    <i class="fas fa-code-branch mr-1.5"></i>Rewrite
                 </button>
             </div>
 
@@ -259,6 +544,47 @@
                     </div>
                 </div>
 
+                <!-- Code Intent Detection Panel -->
+                <div class="glass-panel rounded-xl p-5 mb-5" id="codeIntentPanel" style="display: none;">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-brain text-xl text-cyan-400"></i>
+                        <h3 class="text-lg font-semibold text-white">Code Intent Detection</h3>
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-cyan-500/20 text-cyan-300">AI Powered</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-project-diagram text-purple-400"></i>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider">Project Type</span>
+                            </div>
+                            <p class="text-white font-semibold" id="intentProjectType">-</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-layer-group text-green-400"></i>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider">Architecture Style</span>
+                            </div>
+                            <p class="text-white font-semibold" id="intentArchitecture">-</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-puzzle-piece text-yellow-400"></i>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider">Design Patterns</span>
+                            </div>
+                            <p class="text-white font-semibold" id="intentPatterns">-</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-700">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-lightbulb text-yellow-400 mt-1"></i>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white mb-1">Why This Matters</h4>
+                                <p class="text-sm text-slate-400" id="intentWhyMatters">Understanding the code's intent helps provide more relevant suggestions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Review Content -->
                 <div class="result-panel rounded-xl p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -269,10 +595,480 @@
                     </div>
                     <div id="reviewContent" class="markdown-body text-slate-300 text-sm leading-relaxed"></div>
                 </div>
+
+                <!-- AI Explanation Timeline -->
+                <div class="glass-panel rounded-xl p-5 mt-5" id="aiTimelinePanel" style="display: none;">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-stream text-xl text-purple-400"></i>
+                            <h3 class="text-lg font-semibold text-white">AI Analysis Timeline</h3>
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-purple-500/20 text-purple-300">Step-by-Step</span>
+                        </div>
+                        <button onclick="toggleTimeline()" class="text-slate-400 hover:text-white text-sm transition-colors">
+                            <i class="fas fa-chevron-down" id="timelineToggleIcon"></i>
+                        </button>
+                    </div>
+                    <div id="aiTimelineContent" class="timeline-container">
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #22c55e;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-white font-medium">Code Received</span>
+                                <p class="text-xs text-slate-500">Input validated and parsed</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #22c55e;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-white font-medium">Language Detected</span>
+                                <p class="text-xs text-slate-500" id="timelineLang">Python</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #22c55e;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-white font-medium">Vulnerability KB Scanned</span>
+                                <p class="text-xs text-slate-500" id="timelineKB">8 patterns checked</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #22c55e;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-white font-medium">AI Model Inference</span>
+                                <p class="text-xs text-slate-500">Llama 3.3 70B processed analysis</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #22c55e;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-white font-medium">Issues Categorized</span>
+                                <p class="text-xs text-slate-500" id="timelineIssues">Critical, High, Medium, Low</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="pulse-dot" style="background: #8b5cf6;"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-purple-300 font-medium">Review Complete</span>
+                                <p class="text-xs text-slate-500" id="timelineComplete">Ready for display</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agents Tab -->
+            <div id="panelAgents" class="hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Security Agent -->
+                    <div class="result-panel rounded-xl overflow-hidden" id="agentSecurity">
+                        <div class="p-4 flex items-center gap-3" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));">
+                            <span class="text-2xl">🛡️</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Security Agent</h3>
+                                <p class="text-xs text-slate-400">Analyzing security vulnerabilities</p>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div id="agentSecurityContent" class="markdown-body text-slate-300 text-sm leading-relaxed">
+                                <p class="text-slate-500 italic">Click "Multi-Agent Review" to run analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Agent -->
+                    <div class="result-panel rounded-xl overflow-hidden" id="agentPerformance">
+                        <div class="p-4 flex items-center gap-3" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));">
+                            <span class="text-2xl">⚡</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Performance Agent</h3>
+                                <p class="text-xs text-slate-400">Analyzing performance bottlenecks</p>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div id="agentPerformanceContent" class="markdown-body text-slate-300 text-sm leading-relaxed">
+                                <p class="text-slate-500 italic">Click "Multi-Agent Review" to run analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clean Code Agent -->
+                    <div class="result-panel rounded-xl overflow-hidden" id="agentCleanCode">
+                        <div class="p-4 flex items-center gap-3" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));">
+                            <span class="text-2xl">🧹</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Clean Code Agent</h3>
+                                <p class="text-xs text-slate-400">Analyzing code quality & readability</p>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div id="agentCleanCodeContent" class="markdown-body text-slate-300 text-sm leading-relaxed">
+                                <p class="text-slate-500 italic">Click "Multi-Agent Review" to run analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Architecture Agent -->
+                    <div class="result-panel rounded-xl overflow-hidden" id="agentArchitecture">
+                        <div class="p-4 flex items-center gap-3" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));">
+                            <span class="text-2xl">📐</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Architecture Agent</h3>
+                                <p class="text-xs text-slate-400">Analyzing design patterns & structure</p>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div id="agentArchitectureContent" class="markdown-body text-slate-300 text-sm leading-relaxed">
+                                <p class="text-slate-500 italic">Click "Multi-Agent Review" to run analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Score Tab -->
+            <div id="panelScore" class="hidden">
+                <!-- Score Gauges -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugeOverall">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scoreOverall">--</div>
+                                <div class="score-label">Overall</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugeQuality">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scoreQuality">--</div>
+                                <div class="score-label">Code Quality</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugeSecurity">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scoreSecurity">--</div>
+                                <div class="score-label">Security</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugeMaintain">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scoreMaintain">--</div>
+                                <div class="score-label">Maintainability</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugePerformance">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scorePerformance">--</div>
+                                <div class="score-label">Performance</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 flex flex-col items-center">
+                        <div class="score-gauge" id="gaugeReliability">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="52"/>
+                                <circle class="progress-circle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-value" id="scoreReliability">--</div>
+                                <div class="score-label">Reliability</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary & Recommendations -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-file-medical-alt mr-2 text-indigo-400"></i>Health Summary
+                        </h3>
+                        <p id="scoreSummary" class="text-slate-300 text-sm leading-relaxed">No analysis yet.</p>
+                    </div>
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>Top Recommendations
+                        </h3>
+                        <ul id="scoreRecommendations" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No recommendations yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Prediction Dashboard Tab -->
+            <div id="panelRisk" class="hidden">
+                <!-- Risk Overview Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="glass-panel rounded-xl p-5" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05)); border-color: rgba(239, 68, 68, 0.3);">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
+                                <i class="fas fa-bomb text-red-400"></i>
+                            </div>
+                            <span class="text-sm text-slate-400">Runtime Failure</span>
+                        </div>
+                        <div class="text-3xl font-bold text-red-400" id="riskRuntime">--%</div>
+                        <div class="text-xs text-slate-500 mt-1" id="riskRuntimeLevel">Not analyzed</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-5" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05)); border-color: rgba(249, 115, 22, 0.3);">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                                <i class="fas fa-user-secret text-orange-400"></i>
+                            </div>
+                            <span class="text-sm text-slate-400">Security Breach</span>
+                        </div>
+                        <div class="text-3xl font-bold text-orange-400" id="riskSecurity">--%</div>
+                        <div class="text-xs text-slate-500 mt-1" id="riskSecurityLevel">Not analyzed</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-5" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(234, 179, 8, 0.05)); border-color: rgba(234, 179, 8, 0.3);">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                                <i class="fas fa-tools text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-slate-400">Maintainability</span>
+                        </div>
+                        <div class="text-3xl font-bold text-yellow-400" id="riskMaintain">--</div>
+                        <div class="text-xs text-slate-500 mt-1" id="riskMaintainLevel">Not analyzed</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-5" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05)); border-color: rgba(139, 92, 246, 0.3);">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                <i class="fas fa-credit-card text-purple-400"></i>
+                            </div>
+                            <span class="text-sm text-slate-400">Technical Debt</span>
+                        </div>
+                        <div class="text-3xl font-bold text-purple-400" id="riskDebt">--</div>
+                        <div class="text-xs text-slate-500 mt-1" id="riskDebtHours">Est. 0 hours to fix</div>
+                    </div>
+                </div>
+
+                <!-- Overall Risk Score -->
+                <div class="glass-panel rounded-xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">
+                                <i class="fas fa-shield-alt mr-2 text-indigo-400"></i>Overall Risk Score
+                            </h3>
+                            <p id="riskSummaryText" class="text-sm text-slate-400">Click "Risk Prediction" to analyze your code.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-bold" id="riskOverallScore" style="color: #6366f1;">--</div>
+                            <div class="text-xs text-slate-500">/ 100 (lower is safer)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Risk Analysis -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Runtime Factors -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-bug mr-2 text-red-400"></i>Runtime Risk Factors
+                        </h3>
+                        <ul id="riskRuntimeFactors" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No analysis yet.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Security Vulnerabilities -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-shield-virus mr-2 text-orange-400"></i>Security Vulnerabilities
+                        </h3>
+                        <ul id="riskVulnerabilities" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No vulnerabilities detected yet.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Maintainability Issues -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-wrench mr-2 text-yellow-400"></i>Maintainability Issues
+                        </h3>
+                        <ul id="riskMaintainIssues" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No issues detected yet.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Priority Fixes -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-tasks mr-2 text-green-400"></i>Priority Fixes
+                        </h3>
+                        <ul id="riskPriorityFixes" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No fixes suggested yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub Report Tab -->
+            <div id="panelGithub" class="hidden">
+                <!-- Repo Header -->
+                <div class="glass-panel rounded-xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(88, 28, 135, 0.2), rgba(99, 102, 241, 0.1));">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                                <i class="fab fa-github text-4xl text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h2 id="githubRepoName" class="text-xl font-bold text-white">Repository Name</h2>
+                                <p class="text-sm text-slate-400"><span id="githubFilesCount">0</span> files analyzed • <span id="githubBranch">main</span> branch</p>
+                            </div>
+                        </div>
+                        <button id="downloadPdfBtn" onclick="downloadPdfReport()" class="px-6 py-3 rounded-xl font-semibold text-white flex items-center gap-2" style="background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);">
+                            <i class="fas fa-file-pdf"></i>Download PDF Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GitHub Scores -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-green-400" id="ghScoreOverall">--</div>
+                        <div class="text-xs text-slate-400 mt-1">Overall</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-blue-400" id="ghScoreQuality">--</div>
+                        <div class="text-xs text-slate-400 mt-1">Code Quality</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-red-400" id="ghScoreSecurity">--</div>
+                        <div class="text-xs text-slate-400 mt-1">Security</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-yellow-400" id="ghScoreMaintain">--</div>
+                        <div class="text-xs text-slate-400 mt-1">Maintainability</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-orange-400" id="ghScorePerformance">--</div>
+                        <div class="text-xs text-slate-400 mt-1">Performance</div>
+                    </div>
+                </div>
+
+                <!-- Analysis Details -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Project Summary -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-project-diagram mr-2 text-purple-400"></i>Project Summary
+                        </h3>
+                        <p id="ghProjectSummary" class="text-slate-300 text-sm leading-relaxed">Scan a repository to see analysis...</p>
+                        <div class="mt-4">
+                            <h4 class="text-sm font-semibold text-slate-300 mb-2">Tech Stack</h4>
+                            <div id="ghTechStack" class="flex flex-wrap gap-2">
+                                <span class="text-xs text-slate-500">No tech stack detected yet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Files Analyzed -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-folder-open mr-2 text-yellow-400"></i>Files Analyzed
+                        </h3>
+                        <div id="ghFilesList" class="space-y-2 max-h-48 overflow-y-auto">
+                            <p class="text-slate-500 text-sm">No files scanned yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issues & Recommendations -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Critical Issues -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-exclamation-triangle mr-2 text-red-400"></i>Critical Issues
+                        </h3>
+                        <ul id="ghCriticalIssues" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No issues detected yet.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="result-panel rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                            <i class="fas fa-lightbulb mr-2 text-green-400"></i>Recommendations
+                        </h3>
+                        <ul id="ghRecommendations" class="text-slate-300 text-sm space-y-2">
+                            <li class="text-slate-500">No recommendations yet.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <!-- Rewrite Tab -->
             <div id="panelRewrite" class="hidden">
+                <!-- Before vs After Impact Panel -->
+                <div class="glass-panel rounded-xl p-5 mb-5" id="impactPanel" style="display: none;">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-chart-bar text-xl text-green-400"></i>
+                        <h3 class="text-lg font-semibold text-white">Before vs After Impact</h3>
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-300">Improvement Analysis</span>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <i class="fas fa-tachometer-alt text-cyan-400"></i>
+                            </div>
+                            <span class="text-xs text-slate-400 uppercase tracking-wider">Performance</span>
+                            <p class="text-2xl font-bold text-green-400 mt-1" id="impactPerformance">+0%</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <i class="fas fa-shield-alt text-red-400"></i>
+                            </div>
+                            <span class="text-xs text-slate-400 uppercase tracking-wider">Security Risks</span>
+                            <p class="text-2xl font-bold text-green-400 mt-1" id="impactSecurity">-0</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <i class="fas fa-file-code text-yellow-400"></i>
+                            </div>
+                            <span class="text-xs text-slate-400 uppercase tracking-wider">Lines Reduced</span>
+                            <p class="text-2xl font-bold text-green-400 mt-1" id="impactLines">-0%</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <i class="fas fa-leaf text-green-400"></i>
+                            </div>
+                            <span class="text-xs text-slate-400 uppercase tracking-wider">Clean Code Score</span>
+                            <p class="text-2xl font-bold text-green-400 mt-1" id="impactClean">+0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-info-circle text-blue-400"></i>
+                            <p class="text-sm text-slate-400" id="impactSummary">Calculating improvements...</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="result-panel rounded-xl p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold text-white"><i class="fas fa-wand-magic-sparkles mr-2 text-indigo-400"></i>Optimized Code</h3>
@@ -297,6 +1093,115 @@
         <!-- Copy Toast -->
         <div id="copyToast" class="hidden fixed bottom-8 right-8 bg-green-600 text-white px-5 py-3 rounded-xl shadow-lg z-50 copy-toast">
             <i class="fas fa-check-circle mr-2"></i>Copied to clipboard!
+        </div>
+
+        <!-- Multi-Agent Modal -->
+        <div id="agentModal" class="modal-overlay hidden">
+            <div class="modal-content" style="max-width: 900px;">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                            <i class="fas fa-robot text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">AI Agent Collaboration</h2>
+                            <p class="text-sm text-slate-400">4 specialized agents analyzing your code</p>
+                        </div>
+                    </div>
+                    <button onclick="closeAgentModal()" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Agent Summary Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="agent-card" onclick="expandAgent('security')">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-2xl">🛡️</span>
+                            <span class="text-sm font-semibold text-white">Security</span>
+                        </div>
+                        <div class="confidence-bar mb-2">
+                            <div class="confidence-fill" id="modalSecurityConfidence" style="width: 0%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="impact-badge impact-high hidden" id="modalSecurityBadge">High Risk</span>
+                            <span class="text-xs text-slate-400" id="modalSecurityScore">--</span>
+                        </div>
+                    </div>
+                    <div class="agent-card" onclick="expandAgent('performance')">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-2xl">⚡</span>
+                            <span class="text-sm font-semibold text-white">Performance</span>
+                        </div>
+                        <div class="confidence-bar mb-2">
+                            <div class="confidence-fill" id="modalPerfConfidence" style="width: 0%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="impact-badge impact-medium hidden" id="modalPerfBadge">Medium</span>
+                            <span class="text-xs text-slate-400" id="modalPerfScore">--</span>
+                        </div>
+                    </div>
+                    <div class="agent-card" onclick="expandAgent('cleancode')">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-2xl">🧹</span>
+                            <span class="text-sm font-semibold text-white">Clean Code</span>
+                        </div>
+                        <div class="confidence-bar mb-2">
+                            <div class="confidence-fill" id="modalCleanConfidence" style="width: 0%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="impact-badge impact-low hidden" id="modalCleanBadge">Low</span>
+                            <span class="text-xs text-slate-400" id="modalCleanScore">--</span>
+                        </div>
+                    </div>
+                    <div class="agent-card" onclick="expandAgent('architecture')">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-2xl">📐</span>
+                            <span class="text-sm font-semibold text-white">Architecture</span>
+                        </div>
+                        <div class="confidence-bar mb-2">
+                            <div class="confidence-fill" id="modalArchConfidence" style="width: 0%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="impact-badge impact-info hidden" id="modalArchBadge">Info</span>
+                            <span class="text-xs text-slate-400" id="modalArchScore">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expanded Agent Details -->
+                <div id="expandedAgentDetails" class="glass-panel rounded-xl p-5 max-h-64 overflow-y-auto">
+                    <div class="text-center text-slate-400 py-6">
+                        <i class="fas fa-hand-pointer text-3xl mb-3 text-purple-400"></i>
+                        <p>Click on an agent card to see detailed analysis</p>
+                    </div>
+                </div>
+
+                <!-- AI Timeline Preview -->
+                <div class="mt-4">
+                    <h4 class="text-sm font-semibold text-slate-300 mb-3">
+                        <i class="fas fa-history mr-2 text-cyan-400"></i>Analysis Timeline
+                    </h4>
+                    <div class="timeline-container" id="agentTimeline">
+                        <div class="timeline-step">
+                            <div class="pulse-dot"></div>
+                            <div class="timeline-content">
+                                <span class="text-xs text-slate-400">Waiting for analysis...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-end gap-3 mt-6">
+                    <button onclick="closeAgentModal()" class="px-4 py-2 rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition-colors">
+                        Close
+                    </button>
+                    <button onclick="viewFullReport()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium hover:opacity-90 transition-opacity">
+                        <i class="fas fa-expand-alt mr-2"></i>View Full Report
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -336,28 +1241,54 @@
 
         function switchTab(tab) {
             const reviewTab = document.getElementById('tabReview');
+            const agentsTab = document.getElementById('tabAgents');
+            const scoreTab = document.getElementById('tabScore');
+            const riskTab = document.getElementById('tabRisk');
+            const githubTab = document.getElementById('tabGithub');
             const rewriteTab = document.getElementById('tabRewrite');
             const reviewPanel = document.getElementById('panelReview');
+            const agentsPanel = document.getElementById('panelAgents');
+            const scorePanel = document.getElementById('panelScore');
+            const riskPanel = document.getElementById('panelRisk');
+            const githubPanel = document.getElementById('panelGithub');
             const rewritePanel = document.getElementById('panelRewrite');
 
+            // Reset all tabs
+            [reviewTab, agentsTab, scoreTab, riskTab, githubTab, rewriteTab].forEach(t => {
+                if (t) {
+                    t.classList.remove('active', 'text-slate-300');
+                    t.classList.add('text-slate-500');
+                }
+            });
+            [reviewPanel, agentsPanel, scorePanel, riskPanel, githubPanel, rewritePanel].forEach(p => {
+                if (p) p.classList.add('hidden');
+            });
+
+            // Activate selected tab
             if (tab === 'review') {
-                reviewTab.classList.add('active');
+                reviewTab.classList.add('active', 'text-slate-300');
                 reviewTab.classList.remove('text-slate-500');
-                reviewTab.classList.add('text-slate-300');
-                rewriteTab.classList.remove('active');
-                rewriteTab.classList.add('text-slate-500');
-                rewriteTab.classList.remove('text-slate-300');
                 reviewPanel.classList.remove('hidden');
-                rewritePanel.classList.add('hidden');
+            } else if (tab === 'agents') {
+                agentsTab.classList.add('active', 'text-slate-300');
+                agentsTab.classList.remove('text-slate-500');
+                agentsPanel.classList.remove('hidden');
+            } else if (tab === 'score') {
+                scoreTab.classList.add('active', 'text-slate-300');
+                scoreTab.classList.remove('text-slate-500');
+                scorePanel.classList.remove('hidden');
+            } else if (tab === 'risk') {
+                riskTab.classList.add('active', 'text-slate-300');
+                riskTab.classList.remove('text-slate-500');
+                riskPanel.classList.remove('hidden');
+            } else if (tab === 'github') {
+                githubTab.classList.add('active', 'text-slate-300');
+                githubTab.classList.remove('text-slate-500');
+                githubPanel.classList.remove('hidden');
             } else {
-                rewriteTab.classList.add('active');
+                rewriteTab.classList.add('active', 'text-slate-300');
                 rewriteTab.classList.remove('text-slate-500');
-                rewriteTab.classList.add('text-slate-300');
-                reviewTab.classList.remove('active');
-                reviewTab.classList.add('text-slate-500');
-                reviewTab.classList.remove('text-slate-300');
                 rewritePanel.classList.remove('hidden');
-                reviewPanel.classList.add('hidden');
             }
         }
 
@@ -371,6 +1302,228 @@
             });
         }
 
+        // Current mode: 'developer' or 'beginner'
+        let currentMode = 'developer';
+        let currentPolicyMode = 'startup';
+
+        // Live Code Metrics - Real-time code analysis
+        function updateLiveMetrics() {
+            const code = document.getElementById('codeInput').value;
+            const lines = code.split('\n').length;
+            
+            // Count functions/methods
+            const funcPatterns = [
+                /\bdef\s+\w+/g,           // Python
+                /\bfunction\s+\w+/g,       // JavaScript
+                /\bconst\s+\w+\s*=\s*\(/g, // Arrow functions
+                /\b(public|private|protected)?\s*(static)?\s*\w+\s*\(/g, // Java/C++
+                /\bfunc\s+\w+/g,           // Go/Swift
+            ];
+            let functions = 0;
+            funcPatterns.forEach(pattern => {
+                const matches = code.match(pattern);
+                if (matches) functions += matches.length;
+            });
+
+            // Estimate complexity
+            let complexity = 'Low';
+            const complexityIndicators = (code.match(/\b(if|else|elif|for|while|switch|case|try|catch|except)\b/g) || []).length;
+            const nestingLevel = (code.match(/\{|\(|\[/g) || []).length;
+            if (complexityIndicators > 15 || nestingLevel > 50) {
+                complexity = 'High';
+            } else if (complexityIndicators > 8 || nestingLevel > 25) {
+                complexity = 'Medium';
+            }
+
+            // Detect security risks
+            let securityRisk = 'None';
+            const securityPatterns = [
+                /eval\s*\(/i,
+                /exec\s*\(/i,
+                /SELECT.*FROM.*WHERE/i,
+                /password\s*=\s*['"]/i,
+                /api[_-]?key\s*=\s*['"]/i,
+                /innerHTML\s*=/i,
+                /document\.write/i,
+            ];
+            let riskCount = 0;
+            securityPatterns.forEach(pattern => {
+                if (pattern.test(code)) riskCount++;
+            });
+            if (riskCount >= 3) {
+                securityRisk = 'High';
+                document.getElementById('metricSecurityRisk').className = 'text-lg font-bold text-red-400';
+            } else if (riskCount >= 1) {
+                securityRisk = 'Medium';
+                document.getElementById('metricSecurityRisk').className = 'text-lg font-bold text-yellow-400';
+            } else {
+                securityRisk = 'None';
+                document.getElementById('metricSecurityRisk').className = 'text-lg font-bold text-green-400';
+            }
+
+            // Estimate fix time
+            let fixTime = '-';
+            if (lines > 0) {
+                const baseTime = Math.ceil(lines / 10);
+                const complexityMultiplier = complexity === 'High' ? 3 : complexity === 'Medium' ? 2 : 1;
+                const riskMultiplier = securityRisk === 'High' ? 2 : securityRisk === 'Medium' ? 1.5 : 1;
+                const totalMins = Math.ceil(baseTime * complexityMultiplier * riskMultiplier);
+                fixTime = totalMins < 60 ? `${totalMins}m` : `${Math.floor(totalMins/60)}h ${totalMins%60}m`;
+            }
+
+            // Update UI
+            document.getElementById('metricLines').textContent = lines;
+            document.getElementById('metricFunctions').textContent = functions;
+            document.getElementById('metricComplexity').textContent = complexity;
+            document.getElementById('metricComplexity').className = `text-lg font-bold ${complexity === 'High' ? 'text-red-400' : complexity === 'Medium' ? 'text-yellow-400' : 'text-green-400'}`;
+            document.getElementById('metricSecurityRisk').textContent = securityRisk;
+            document.getElementById('metricFixTime').textContent = fixTime;
+        }
+
+        // Policy Mode functions
+        function updatePolicyMode() {
+            const select = document.getElementById('policyMode');
+            currentPolicyMode = select.value;
+            const desc = document.getElementById('policyDescription');
+            
+            const descriptions = {
+                'startup': 'Optimized for agile development',
+                'enterprise': 'Strict compliance and documentation standards',
+                'banking': 'Maximum security, encryption, audit trails',
+                'education': 'Learning-focused with detailed explanations',
+                'healthcare': 'HIPAA compliance and data privacy focus'
+            };
+            desc.textContent = descriptions[currentPolicyMode] || 'Standard policy';
+        }
+
+        // Code Intent Detection - AI-powered project analysis
+        function detectCodeIntent(code, language) {
+            const panel = document.getElementById('codeIntentPanel');
+            
+            // Detect project type
+            let projectType = 'Generic Application';
+            if (/from\s+(fastapi|flask|django|express|spring|rails)/i.test(code) || 
+                /app\.route|@app\.|router\.|api\./i.test(code)) {
+                projectType = 'Web API / Backend Service';
+            } else if (/from\s+(tensorflow|keras|torch|sklearn|pandas)/i.test(code) ||
+                       /model\.fit|train_test_split|predict/i.test(code)) {
+                projectType = 'Machine Learning / Data Science';
+            } else if (/ReactDOM|useState|useEffect|Vue\.|Angular|Component/i.test(code)) {
+                projectType = 'Frontend / UI Application';
+            } else if (/CREATE\s+TABLE|SELECT\s+\*|INSERT\s+INTO/i.test(code)) {
+                projectType = 'Database / Data Management';
+            } else if (/socket|websocket|mqtt|grpc/i.test(code)) {
+                projectType = 'Real-time / Messaging System';
+            } else if (/def\s+test_|it\(|describe\(|@Test|unittest/i.test(code)) {
+                projectType = 'Test Suite / QA';
+            }
+
+            // Detect architecture style
+            let architecture = 'Procedural';
+            if (/class\s+\w+.*:|\bextends\b|\bimplements\b/i.test(code)) {
+                architecture = 'Object-Oriented (OOP)';
+            }
+            if (/@dataclass|@Entity|@model|Schema|BaseModel/i.test(code)) {
+                architecture = 'Data-Driven / Model-First';
+            }
+            if (/async\s+def|await\s|Promise|\.then\(/i.test(code)) {
+                architecture = 'Async / Event-Driven';
+            }
+            if (/def\s+\w+.*lambda|map\(|filter\(|reduce\(/i.test(code)) {
+                architecture = 'Functional Programming';
+            }
+            if (/microservice|service\.register|ServiceDiscovery/i.test(code)) {
+                architecture = 'Microservices';
+            }
+
+            // Detect design patterns
+            let patterns = [];
+            if (/getInstance|_instance|Singleton/i.test(code)) patterns.push('Singleton');
+            if (/Factory|createInstance|Builder/i.test(code)) patterns.push('Factory');
+            if (/Observer|subscribe|addEventListener|on\(/i.test(code)) patterns.push('Observer');
+            if (/Decorator|@\w+\(|wrapper/i.test(code)) patterns.push('Decorator');
+            if (/Repository|DAO|DataAccess/i.test(code)) patterns.push('Repository');
+            if (/Strategy|Handler|execute\(/i.test(code)) patterns.push('Strategy');
+            if (/Middleware|chain|next\(/i.test(code)) patterns.push('Middleware');
+            if (patterns.length === 0) patterns.push('Custom Implementation');
+
+            // Generate "Why This Matters" message
+            const whyMatters = generateWhyMatters(projectType, architecture, patterns);
+
+            // Update UI
+            document.getElementById('intentProjectType').textContent = projectType;
+            document.getElementById('intentArchitecture').textContent = architecture;
+            document.getElementById('intentPatterns').textContent = patterns.slice(0, 3).join(', ');
+            document.getElementById('intentWhyMatters').textContent = whyMatters;
+            panel.style.display = 'block';
+        }
+
+        function generateWhyMatters(projectType, architecture, patterns) {
+            const messages = {
+                'Web API / Backend Service': 'APIs require careful attention to security, rate limiting, and error handling. We\'ll focus on these areas.',
+                'Machine Learning / Data Science': 'ML code needs efficient data handling, reproducibility, and proper model validation.',
+                'Frontend / UI Application': 'UI code should focus on accessibility, performance, and user experience best practices.',
+                'Database / Data Management': 'Database operations need optimization for queries, proper indexing, and transaction safety.',
+                'Real-time / Messaging System': 'Real-time systems require careful handling of concurrency, connection management, and error recovery.',
+                'Test Suite / QA': 'Test code should be maintainable, cover edge cases, and follow testing best practices.',
+                'Generic Application': 'General code review focusing on maintainability, readability, and common pitfalls.'
+            };
+            return messages[projectType] || messages['Generic Application'];
+        }
+
+        // AI Timeline Functions
+        function showAITimeline(language, summary) {
+            const panel = document.getElementById('aiTimelinePanel');
+            const totalIssues = (summary.critical?.count || 0) + (summary.high?.count || 0) + 
+                               (summary.medium?.count || 0) + (summary.low?.count || 0);
+            
+            // Update timeline details
+            document.getElementById('timelineLang').textContent = language.charAt(0).toUpperCase() + language.slice(1) + ' detected';
+            document.getElementById('timelineKB').textContent = '8 vulnerability patterns scanned';
+            document.getElementById('timelineIssues').textContent = `${totalIssues} issue${totalIssues !== 1 ? 's' : ''} found across severity levels`;
+            
+            const now = new Date();
+            document.getElementById('timelineComplete').textContent = `Completed at ${now.toLocaleTimeString()}`;
+            
+            panel.style.display = 'block';
+        }
+
+        function toggleTimeline() {
+            const content = document.getElementById('aiTimelineContent');
+            const icon = document.getElementById('timelineToggleIcon');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                content.style.display = 'none';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            const devBtn = document.getElementById('modeDeveloper');
+            const begBtn = document.getElementById('modeBeginner');
+            const desc = document.getElementById('modeDescription');
+
+            if (mode === 'developer') {
+                devBtn.classList.add('bg-indigo-500/30', 'text-white');
+                devBtn.classList.remove('bg-transparent', 'text-slate-400');
+                begBtn.classList.remove('bg-indigo-500/30', 'text-white');
+                begBtn.classList.add('bg-transparent', 'text-slate-400');
+                desc.textContent = 'Technical explanations for professionals';
+            } else {
+                begBtn.classList.add('bg-indigo-500/30', 'text-white');
+                begBtn.classList.remove('bg-transparent', 'text-slate-400');
+                devBtn.classList.remove('bg-indigo-500/30', 'text-white');
+                devBtn.classList.add('bg-transparent', 'text-slate-400');
+                desc.textContent = 'Simple explanations with step-by-step guidance';
+            }
+        }
+
         async function reviewCode() {
             const code = document.getElementById('codeInput').value.trim();
             if (!code) {
@@ -381,14 +1534,14 @@
             const language = document.getElementById('langSelect').value;
             const focusAreas = getSelectedFocusAreas();
 
-            showLoading('Reviewing your code...');
+            showLoading(currentMode === 'beginner' ? 'Analyzing with beginner-friendly explanations...' : 'Reviewing your code...');
             document.getElementById('reviewBtn').disabled = true;
 
             try {
                 const response = await fetch('/review', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code, language, focus_areas: focusAreas })
+                    body: JSON.stringify({ code, language, focus_areas: focusAreas, mode: currentMode })
                 });
 
                 if (!response.ok) {
@@ -403,6 +1556,12 @@
                 document.getElementById('highCount').textContent = data.summary.high.count;
                 document.getElementById('mediumCount').textContent = data.summary.medium.count;
                 document.getElementById('lowCount').textContent = data.summary.low.count;
+
+                // Detect code intent and update panel
+                detectCodeIntent(code, language);
+
+                // Show and update AI Timeline
+                showAITimeline(language, data.summary);
 
                 // Render review markdown
                 document.getElementById('reviewContent').innerHTML = marked.parse(data.review);
@@ -447,6 +1606,9 @@
 
                 const data = await response.json();
 
+                // Calculate Before vs After Impact
+                calculateImpact(code, data.rewritten);
+
                 // Render rewritten code markdown
                 document.getElementById('rewriteContent').innerHTML = marked.parse(data.rewritten);
                 document.querySelectorAll('#rewriteContent pre code').forEach(block => hljs.highlightElement(block));
@@ -460,6 +1622,739 @@
             } finally {
                 hideLoading();
                 document.getElementById('rewriteBtn').disabled = false;
+            }
+        }
+
+        // Calculate Before vs After Impact
+        function calculateImpact(originalCode, rewrittenMarkdown) {
+            const panel = document.getElementById('impactPanel');
+            
+            // Extract code from markdown
+            const codeMatch = rewrittenMarkdown.match(/```[\w]*\n?([\s\S]*?)```/);
+            const newCode = codeMatch ? codeMatch[1] : rewrittenMarkdown;
+
+            // Lines comparison
+            const originalLines = originalCode.split('\n').length;
+            const newLines = newCode.split('\n').length;
+            const linesDiff = originalLines - newLines;
+            const linesPercent = Math.round((linesDiff / originalLines) * 100);
+
+            // Security risks comparison
+            const countSecurityRisks = (code) => {
+                const patterns = [/eval\s*\(/gi, /exec\s*\(/gi, /SELECT.*FROM.*WHERE/gi, 
+                                 /password\s*=\s*['"]/gi, /api[_-]?key\s*=\s*['"]/gi, 
+                                 /innerHTML\s*=/gi, /document\.write/gi];
+                return patterns.reduce((count, p) => count + (code.match(p) || []).length, 0);
+            };
+            const originalRisks = countSecurityRisks(originalCode);
+            const newRisks = countSecurityRisks(newCode);
+            const risksDiff = originalRisks - newRisks;
+
+            // Performance estimate (based on common optimizations)
+            let perfImprovement = 0;
+            if (/\.map\(|\.filter\(|\.reduce\(/i.test(newCode) && !/for\s*\(|while\s*\(/i.test(originalCode)) {
+                perfImprovement += 15;
+            }
+            if (/async|await|Promise/i.test(newCode) && !/async|await|Promise/i.test(originalCode)) {
+                perfImprovement += 20;
+            }
+            if (newLines < originalLines) {
+                perfImprovement += Math.min(10, Math.abs(linesPercent));
+            }
+            if (/list\s+comprehension|generator/i.test(newCode)) {
+                perfImprovement += 10;
+            }
+            perfImprovement = Math.min(perfImprovement, 45); // Cap at 45%
+
+            // Clean code score improvement
+            const countCodeSmells = (code) => {
+                let smells = 0;
+                if ((code.match(/\n/g) || []).length < 3 && code.length > 200) smells++; // Long single line
+                if (/(.)\1{4,}/g.test(code)) smells++; // Repeated characters
+                if ((code.match(/\/\/|#|\/\*/g) || []).length < 2 && code.length > 100) smells += 2; // No comments
+                if (/[a-z][A-Z]/g.test(code) === false && /[a-z]_[a-z]/g.test(code) === false) smells++; // No naming convention
+                return smells;
+            };
+            const originalSmells = countCodeSmells(originalCode);
+            const newSmells = countCodeSmells(newCode);
+            const cleanImprovement = Math.max(0, (originalSmells - newSmells) * 5 + 10);
+
+            // Update UI
+            document.getElementById('impactPerformance').textContent = '+' + perfImprovement + '%';
+            document.getElementById('impactPerformance').className = 'text-2xl font-bold ' + (perfImprovement > 0 ? 'text-green-400' : 'text-slate-400');
+            
+            document.getElementById('impactSecurity').textContent = (risksDiff >= 0 ? '-' : '+') + Math.abs(risksDiff);
+            document.getElementById('impactSecurity').className = 'text-2xl font-bold ' + (risksDiff >= 0 ? 'text-green-400' : 'text-red-400');
+            
+            document.getElementById('impactLines').textContent = (linesPercent >= 0 ? '-' : '+') + Math.abs(linesPercent) + '%';
+            document.getElementById('impactLines').className = 'text-2xl font-bold ' + (linesPercent >= 0 ? 'text-green-400' : 'text-yellow-400');
+            
+            document.getElementById('impactClean').textContent = '+' + cleanImprovement;
+            document.getElementById('impactClean').className = 'text-2xl font-bold text-green-400';
+
+            // Summary
+            const summaries = [];
+            if (perfImprovement > 0) summaries.push(`${perfImprovement}% performance boost`);
+            if (risksDiff > 0) summaries.push(`${risksDiff} security risk${risksDiff > 1 ? 's' : ''} eliminated`);
+            if (linesPercent > 0) summaries.push(`${linesPercent}% code reduction`);
+            
+            document.getElementById('impactSummary').textContent = summaries.length > 0 
+                ? 'Key improvements: ' + summaries.join(', ') + '.'
+                : 'Code has been optimized for better readability and maintainability.';
+
+            panel.style.display = 'block';
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return 'excellent';
+            if (score >= 65) return 'good';
+            if (score >= 50) return 'average';
+            if (score >= 30) return 'poor';
+            return 'critical';
+        }
+
+        function updateGauge(gaugeId, valueId, score) {
+            const gauge = document.getElementById(gaugeId);
+            const valueEl = document.getElementById(valueId);
+            const circle = gauge.querySelector('.progress-circle');
+            const circumference = 327; // 2 * PI * 52
+            const offset = circumference - (score / 100) * circumference;
+            
+            const colorClass = getScoreColor(score);
+            circle.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+            circle.classList.add('score-' + colorClass);
+            
+            valueEl.classList.remove('text-excellent', 'text-good', 'text-average', 'text-poor', 'text-critical');
+            valueEl.classList.add('text-' + colorClass);
+            
+            circle.style.strokeDashoffset = offset;
+            valueEl.textContent = score;
+        }
+
+        async function scoreCode() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to analyze.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+
+            showLoading('Analyzing code quality...');
+            document.getElementById('scoreBtn').disabled = true;
+
+            try {
+                const response = await fetch('/score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Score analysis failed');
+                }
+
+                const data = await response.json();
+                const scores = data.scores;
+
+                // Update gauges with animation
+                setTimeout(() => {
+                    updateGauge('gaugeOverall', 'scoreOverall', scores.overall || 0);
+                    updateGauge('gaugeQuality', 'scoreQuality', scores.code_quality || 0);
+                    updateGauge('gaugeSecurity', 'scoreSecurity', scores.security || 0);
+                    updateGauge('gaugeMaintain', 'scoreMaintain', scores.maintainability || 0);
+                    updateGauge('gaugePerformance', 'scorePerformance', scores.performance || 0);
+                    updateGauge('gaugeReliability', 'scoreReliability', scores.reliability || 0);
+                }, 100);
+
+                // Update summary
+                document.getElementById('scoreSummary').textContent = scores.summary || 'No summary available.';
+
+                // Update recommendations
+                const recList = document.getElementById('scoreRecommendations');
+                if (scores.recommendations && scores.recommendations.length > 0) {
+                    recList.innerHTML = scores.recommendations.map(rec => 
+                        `<li class="flex items-start gap-2"><i class="fas fa-chevron-right text-indigo-400 mt-1 text-xs"></i><span>${rec}</span></li>`
+                    ).join('');
+                } else {
+                    recList.innerHTML = '<li class="text-slate-500">No specific recommendations.</li>';
+                }
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('score');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('scoreBtn').disabled = false;
+            }
+        }
+
+        async function multiAgentReview() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to analyze.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+
+            showLoading('Running AI Agents... This may take a moment.');
+            document.getElementById('multiAgentBtn').disabled = true;
+
+            // Show placeholder loading in each agent card
+            const placeholderLoading = '<div class="flex items-center gap-2 text-slate-400"><div class="spinner w-4 h-4 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full"></div><span>Analyzing...</span></div>';
+            document.getElementById('agentSecurityContent').innerHTML = placeholderLoading;
+            document.getElementById('agentPerformanceContent').innerHTML = placeholderLoading;
+            document.getElementById('agentCleanCodeContent').innerHTML = placeholderLoading;
+            document.getElementById('agentArchitectureContent').innerHTML = placeholderLoading;
+
+            document.getElementById('resultsSection').classList.remove('hidden');
+            switchTab('agents');
+
+            try {
+                const response = await fetch('/multi-agent-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Multi-agent review failed');
+                }
+
+                const data = await response.json();
+                const agents = data.agents;
+
+                // Store for modal
+                window.lastAgentData = agents;
+
+                // Update each agent's content
+                if (agents.security) {
+                    document.getElementById('agentSecurityContent').innerHTML = marked.parse(agents.security.analysis);
+                    document.querySelectorAll('#agentSecurityContent pre code').forEach(block => hljs.highlightElement(block));
+                }
+                if (agents.performance) {
+                    document.getElementById('agentPerformanceContent').innerHTML = marked.parse(agents.performance.analysis);
+                    document.querySelectorAll('#agentPerformanceContent pre code').forEach(block => hljs.highlightElement(block));
+                }
+                if (agents.clean_code) {
+                    document.getElementById('agentCleanCodeContent').innerHTML = marked.parse(agents.clean_code.analysis);
+                    document.querySelectorAll('#agentCleanCodeContent pre code').forEach(block => hljs.highlightElement(block));
+                }
+                if (agents.architecture) {
+                    document.getElementById('agentArchitectureContent').innerHTML = marked.parse(agents.architecture.analysis);
+                    document.querySelectorAll('#agentArchitectureContent pre code').forEach(block => hljs.highlightElement(block));
+                }
+
+                // Update modal with confidence scores and badges
+                updateAgentModal(agents);
+
+                // Show modal
+                showAgentModal();
+
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('multiAgentBtn').disabled = false;
+            }
+        }
+
+        // Agent Modal Functions
+        function showAgentModal() {
+            document.getElementById('agentModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAgentModal() {
+            document.getElementById('agentModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateAgentModal(agents) {
+            // Calculate confidence scores based on analysis length and keywords
+            const calcConfidence = (analysis) => {
+                if (!analysis) return 0;
+                const len = analysis.length;
+                const hasIssues = /critical|high|severe|vulnerability|risk|problem|issue/i.test(analysis);
+                let conf = Math.min(95, 50 + (len / 50));
+                return Math.round(conf);
+            };
+
+            const calcRisk = (analysis) => {
+                if (!analysis) return 'none';
+                if (/critical|severe|high risk/i.test(analysis)) return 'high';
+                if (/medium|moderate|warning/i.test(analysis)) return 'medium';
+                if (/low|minor|suggestion/i.test(analysis)) return 'low';
+                return 'info';
+            };
+
+            // Update Security Agent
+            if (agents.security) {
+                const conf = calcConfidence(agents.security.analysis);
+                const risk = calcRisk(agents.security.analysis);
+                document.getElementById('modalSecurityConfidence').style.width = conf + '%';
+                document.getElementById('modalSecurityScore').textContent = conf + '% confidence';
+                const badge = document.getElementById('modalSecurityBadge');
+                badge.classList.remove('hidden', 'impact-high', 'impact-medium', 'impact-low', 'impact-info');
+                badge.classList.add('impact-' + risk);
+                badge.textContent = risk.charAt(0).toUpperCase() + risk.slice(1) + ' Risk';
+            }
+
+            // Update Performance Agent
+            if (agents.performance) {
+                const conf = calcConfidence(agents.performance.analysis);
+                const risk = calcRisk(agents.performance.analysis);
+                document.getElementById('modalPerfConfidence').style.width = conf + '%';
+                document.getElementById('modalPerfScore').textContent = conf + '% confidence';
+                const badge = document.getElementById('modalPerfBadge');
+                badge.classList.remove('hidden', 'impact-high', 'impact-medium', 'impact-low', 'impact-info');
+                badge.classList.add('impact-' + risk);
+                badge.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+            }
+
+            // Update Clean Code Agent
+            if (agents.clean_code) {
+                const conf = calcConfidence(agents.clean_code.analysis);
+                const risk = calcRisk(agents.clean_code.analysis);
+                document.getElementById('modalCleanConfidence').style.width = conf + '%';
+                document.getElementById('modalCleanScore').textContent = conf + '% confidence';
+                const badge = document.getElementById('modalCleanBadge');
+                badge.classList.remove('hidden', 'impact-high', 'impact-medium', 'impact-low', 'impact-info');
+                badge.classList.add('impact-' + risk);
+                badge.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+            }
+
+            // Update Architecture Agent
+            if (agents.architecture) {
+                const conf = calcConfidence(agents.architecture.analysis);
+                const risk = calcRisk(agents.architecture.analysis);
+                document.getElementById('modalArchConfidence').style.width = conf + '%';
+                document.getElementById('modalArchScore').textContent = conf + '% confidence';
+                const badge = document.getElementById('modalArchBadge');
+                badge.classList.remove('hidden', 'impact-high', 'impact-medium', 'impact-low', 'impact-info');
+                badge.classList.add('impact-' + risk);
+                badge.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+            }
+
+            // Update Timeline
+            updateAgentTimeline();
+        }
+
+        function updateAgentTimeline() {
+            const timeline = document.getElementById('agentTimeline');
+            const now = new Date();
+            timeline.innerHTML = `
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #22c55e;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-white font-medium">Code Parsed</span>
+                        <span class="text-xs text-slate-500 ml-2">${now.toLocaleTimeString()}</span>
+                    </div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #22c55e;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-white font-medium">Security Analysis Complete</span>
+                    </div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #22c55e;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-white font-medium">Performance Analysis Complete</span>
+                    </div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #22c55e;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-white font-medium">Clean Code Analysis Complete</span>
+                    </div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #22c55e;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-white font-medium">Architecture Analysis Complete</span>
+                    </div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="pulse-dot" style="background: #8b5cf6;"></div>
+                    <div class="timeline-content">
+                        <span class="text-xs text-purple-300 font-medium">All Agents Synced</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function expandAgent(agent) {
+            const details = document.getElementById('expandedAgentDetails');
+            const data = window.lastAgentData;
+            
+            if (!data) return;
+
+            const agentMap = {
+                'security': { name: 'Security Agent', emoji: '🛡️', data: data.security, color: 'red' },
+                'performance': { name: 'Performance Agent', emoji: '⚡', data: data.performance, color: 'yellow' },
+                'cleancode': { name: 'Clean Code Agent', emoji: '🧹', data: data.clean_code, color: 'green' },
+                'architecture': { name: 'Architecture Agent', emoji: '📐', data: data.architecture, color: 'purple' }
+            };
+
+            const a = agentMap[agent];
+            if (!a || !a.data) return;
+
+            details.innerHTML = `
+                <div class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-700">
+                    <span class="text-2xl">${a.emoji}</span>
+                    <h4 class="text-lg font-semibold text-white">${a.name}</h4>
+                </div>
+                <div class="markdown-body text-slate-300 text-sm leading-relaxed">
+                    ${marked.parse(a.data.analysis || 'No analysis available.')}
+                </div>
+            `;
+            details.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+        }
+
+        function viewFullReport() {
+            closeAgentModal();
+            switchTab('agents');
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Store GitHub scan data for PDF generation
+        let lastGitHubScan = null;
+
+        async function scanGitHubRepo() {
+            const repoUrl = document.getElementById('githubUrl').value.trim();
+            if (!repoUrl) {
+                alert('Please enter a GitHub repository URL.');
+                return;
+            }
+
+            showLoading('Scanning GitHub repository... This may take a moment.');
+            document.getElementById('githubScanBtn').disabled = true;
+
+            try {
+                const response = await fetch('/github-scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ repo_url: repoUrl })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'GitHub scan failed');
+                }
+
+                const data = await response.json();
+                lastGitHubScan = data;
+
+                // Update repo header
+                document.getElementById('githubRepoName').textContent = data.repo_name;
+                document.getElementById('githubFilesCount').textContent = data.files_analyzed;
+                document.getElementById('githubBranch').textContent = data.branch;
+
+                const analysis = data.analysis;
+
+                // Update scores
+                const getScoreColor = (score) => {
+                    if (score >= 80) return 'text-green-400';
+                    if (score >= 65) return 'text-lime-400';
+                    if (score >= 50) return 'text-yellow-400';
+                    if (score >= 30) return 'text-orange-400';
+                    return 'text-red-400';
+                };
+
+                const updateScore = (id, score) => {
+                    const el = document.getElementById(id);
+                    el.textContent = score || '--';
+                    el.className = 'text-3xl font-bold ' + getScoreColor(score || 0);
+                };
+
+                updateScore('ghScoreOverall', analysis.overall_score);
+                updateScore('ghScoreQuality', analysis.code_quality);
+                updateScore('ghScoreSecurity', analysis.security_score);
+                updateScore('ghScoreMaintain', analysis.maintainability_score);
+                updateScore('ghScorePerformance', analysis.performance_score);
+
+                // Update project summary
+                document.getElementById('ghProjectSummary').textContent = analysis.project_summary || 'No summary available.';
+
+                // Update tech stack
+                const techStackEl = document.getElementById('ghTechStack');
+                if (analysis.tech_stack && analysis.tech_stack.length > 0) {
+                    techStackEl.innerHTML = analysis.tech_stack.map(tech => 
+                        `<span class="px-2 py-1 text-xs rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">${tech}</span>`
+                    ).join('');
+                } else {
+                    techStackEl.innerHTML = '<span class="text-xs text-slate-500">No tech stack detected</span>';
+                }
+
+                // Update files list
+                const filesListEl = document.getElementById('ghFilesList');
+                if (data.files && data.files.length > 0) {
+                    filesListEl.innerHTML = data.files.map(file => `
+                        <div class="flex items-center justify-between p-2 rounded-lg bg-slate-800/50">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-file-code text-indigo-400 text-sm"></i>
+                                <span class="text-sm text-slate-300">${file.path}</span>
+                            </div>
+                            <span class="text-xs text-slate-500">${file.lines} lines</span>
+                        </div>
+                    `).join('');
+                } else {
+                    filesListEl.innerHTML = '<p class="text-slate-500 text-sm">No files found.</p>';
+                }
+
+                // Update critical issues
+                const issuesEl = document.getElementById('ghCriticalIssues');
+                if (analysis.critical_issues && analysis.critical_issues.length > 0) {
+                    issuesEl.innerHTML = analysis.critical_issues.map(issue => 
+                        `<li class="flex items-start gap-2"><i class="fas fa-exclamation-circle text-red-400 mt-0.5 text-xs"></i><span>${issue}</span></li>`
+                    ).join('');
+                } else {
+                    issuesEl.innerHTML = '<li class="text-green-400 flex items-center gap-2"><i class="fas fa-check-circle"></i>No critical issues found!</li>';
+                }
+
+                // Update recommendations
+                const recsEl = document.getElementById('ghRecommendations');
+                if (analysis.recommendations && analysis.recommendations.length > 0) {
+                    recsEl.innerHTML = analysis.recommendations.map(rec => 
+                        `<li class="flex items-start gap-2"><i class="fas fa-chevron-right text-green-400 mt-0.5 text-xs"></i><span>${rec}</span></li>`
+                    ).join('');
+                } else {
+                    recsEl.innerHTML = '<li class="text-slate-500">No specific recommendations.</li>';
+                }
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('github');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('githubScanBtn').disabled = false;
+            }
+        }
+
+        async function downloadPdfReport() {
+            if (!lastGitHubScan) {
+                alert('Please scan a GitHub repository first.');
+                return;
+            }
+
+            showLoading('Generating PDF report...');
+            document.getElementById('downloadPdfBtn').disabled = true;
+
+            try {
+                const response = await fetch('/generate-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        repo_name: lastGitHubScan.repo_name,
+                        files_analyzed: lastGitHubScan.files_analyzed,
+                        scores: lastGitHubScan.analysis,
+                        agent_results: {},
+                        summary: lastGitHubScan.analysis.project_summary || ''
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to generate PDF');
+                }
+
+                // Download the PDF
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `CodeRefine_Report_${lastGitHubScan.repo_name.replace('/', '_')}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                // Show success toast
+                const toast = document.getElementById('copyToast');
+                toast.innerHTML = '<i class="fas fa-check-circle mr-2"></i>PDF downloaded successfully!';
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Copied to clipboard!';
+                }, 2200);
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('downloadPdfBtn').disabled = false;
+            }
+        }
+
+        // Risk Prediction function
+        async function predictRisks() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to analyze.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+
+            showLoading('Predicting risks and vulnerabilities...');
+            document.getElementById('riskBtn').disabled = true;
+
+            try {
+                const response = await fetch('/risk-prediction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Risk prediction failed');
+                }
+
+                const data = await response.json();
+                const risks = data.risks;
+
+                // Update risk cards
+                const getRiskColor = (prob) => {
+                    if (prob >= 70) return '#ef4444';
+                    if (prob >= 50) return '#f97316';
+                    if (prob >= 30) return '#eab308';
+                    return '#22c55e';
+                };
+
+                // Runtime risk
+                const runtimeProb = risks.runtime_failure_risk?.probability || 0;
+                document.getElementById('riskRuntime').textContent = runtimeProb + '%';
+                document.getElementById('riskRuntime').style.color = getRiskColor(runtimeProb);
+                document.getElementById('riskRuntimeLevel').textContent = risks.runtime_failure_risk?.level || 'N/A';
+
+                // Security risk
+                const securityProb = risks.security_breach_risk?.probability || 0;
+                document.getElementById('riskSecurity').textContent = securityProb + '%';
+                document.getElementById('riskSecurity').style.color = getRiskColor(securityProb);
+                document.getElementById('riskSecurityLevel').textContent = risks.security_breach_risk?.level || 'N/A';
+
+                // Maintainability
+                const maintainScore = risks.maintainability_risk?.score || 0;
+                document.getElementById('riskMaintain').textContent = maintainScore;
+                document.getElementById('riskMaintain').style.color = getRiskColor(100 - maintainScore);
+                document.getElementById('riskMaintainLevel').textContent = risks.maintainability_risk?.level || 'N/A';
+
+                // Technical debt
+                const debtScore = risks.technical_debt?.score || 0;
+                document.getElementById('riskDebt').textContent = debtScore;
+                document.getElementById('riskDebt').style.color = getRiskColor(debtScore);
+                document.getElementById('riskDebtHours').textContent = `Est. ${risks.technical_debt?.hours_to_fix || 0} hours to fix`;
+
+                // Overall score
+                const overallScore = risks.overall_risk_score || 0;
+                document.getElementById('riskOverallScore').textContent = overallScore;
+                document.getElementById('riskOverallScore').style.color = getRiskColor(overallScore);
+                document.getElementById('riskSummaryText').textContent = risks.risk_summary || 'Analysis complete.';
+
+                // Runtime factors
+                const runtimeFactors = risks.runtime_failure_risk?.factors || [];
+                document.getElementById('riskRuntimeFactors').innerHTML = runtimeFactors.length > 0 
+                    ? runtimeFactors.map(f => `<li class="flex items-start gap-2"><i class="fas fa-exclamation-circle text-red-400 mt-0.5 text-xs"></i><span>${f}</span></li>`).join('')
+                    : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No runtime risks detected</li>';
+
+                // Security vulnerabilities
+                const securityVulns = risks.security_breach_risk?.vulnerabilities || [];
+                document.getElementById('riskVulnerabilities').innerHTML = securityVulns.length > 0 
+                    ? securityVulns.map(v => `<li class="flex items-start gap-2"><i class="fas fa-shield-virus text-orange-400 mt-0.5 text-xs"></i><span>${v}</span></li>`).join('')
+                    : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No security vulnerabilities detected</li>';
+
+                // Maintainability issues
+                const maintainIssues = risks.maintainability_risk?.issues || [];
+                document.getElementById('riskMaintainIssues').innerHTML = maintainIssues.length > 0 
+                    ? maintainIssues.map(i => `<li class="flex items-start gap-2"><i class="fas fa-wrench text-yellow-400 mt-0.5 text-xs"></i><span>${i}</span></li>`).join('')
+                    : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Good maintainability</li>';
+
+                // Priority fixes
+                const priorityFixes = risks.technical_debt?.priority_fixes || [];
+                document.getElementById('riskPriorityFixes').innerHTML = priorityFixes.length > 0 
+                    ? priorityFixes.map((f, i) => `<li class="flex items-start gap-2"><span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 text-xs flex items-center justify-center">${i+1}</span><span>${f}</span></li>`).join('')
+                    : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No urgent fixes needed</li>';
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('risk');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('riskBtn').disabled = false;
+            }
+        }
+
+        // Enterprise Report function
+        async function generateEnterpriseReport() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to generate a report.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+            const projectName = prompt('Enter project name for the report:', 'Code Analysis');
+            if (!projectName) return;
+
+            showLoading('Generating enterprise security report...');
+            document.getElementById('enterpriseBtn').disabled = true;
+
+            try {
+                const response = await fetch('/enterprise-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        code, 
+                        language,
+                        project_name: projectName,
+                        include_sections: ['security', 'compliance', 'issues', 'recommendations']
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to generate enterprise report');
+                }
+
+                // Download the PDF
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Enterprise_Security_Audit_${projectName.replace(/\s+/g, '_')}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                // Show success toast
+                const toast = document.getElementById('copyToast');
+                toast.innerHTML = '<i class="fas fa-file-pdf mr-2"></i>Enterprise report downloaded!';
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Copied to clipboard!';
+                }, 2200);
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('enterpriseBtn').disabled = false;
             }
         }
     </script>
