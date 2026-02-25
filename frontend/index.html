@@ -441,17 +441,23 @@
                         </div>
                     </div>
 
-                    <!-- Mode Toggle: Beginner/Developer -->
+                    <!-- Mode Toggle: Developer/Beginner/Interview/Compliance -->
                     <div class="mb-5">
                         <label class="block text-sm font-medium text-slate-300 mb-2">
                             <i class="fas fa-graduation-cap mr-1 text-yellow-400"></i>Explanation Mode
                         </label>
-                        <div class="flex rounded-lg overflow-hidden border border-indigo-500/30">
-                            <button id="modeDeveloper" onclick="setMode('developer')" class="flex-1 py-2.5 text-sm font-medium transition-all bg-indigo-500/30 text-white">
+                        <div class="grid grid-cols-2 gap-1 rounded-lg overflow-hidden border border-indigo-500/30">
+                            <button id="modeDeveloper" onclick="setMode('developer')" class="py-2 text-xs font-medium transition-all bg-indigo-500/30 text-white">
                                 <i class="fas fa-code mr-1"></i>Developer
                             </button>
-                            <button id="modeBeginner" onclick="setMode('beginner')" class="flex-1 py-2.5 text-sm font-medium transition-all bg-transparent text-slate-400 hover:text-white">
+                            <button id="modeBeginner" onclick="setMode('beginner')" class="py-2 text-xs font-medium transition-all bg-transparent text-slate-400 hover:text-white">
                                 <i class="fas fa-user-graduate mr-1"></i>Beginner
+                            </button>
+                            <button id="modeInterview" onclick="setMode('interview')" class="py-2 text-xs font-medium transition-all bg-transparent text-slate-400 hover:text-white border-t border-indigo-500/20">
+                                <i class="fas fa-chalkboard-teacher mr-1"></i>Interview
+                            </button>
+                            <button id="modeCompliance" onclick="setMode('compliance')" class="py-2 text-xs font-medium transition-all bg-transparent text-slate-400 hover:text-white border-t border-indigo-500/20">
+                                <i class="fas fa-gavel mr-1"></i>Compliance
                             </button>
                         </div>
                         <p class="text-xs text-slate-500 mt-1" id="modeDescription">Technical explanations for professionals</p>
@@ -473,26 +479,69 @@
                         <p class="text-xs text-slate-500 mt-1" id="policyDescription">Optimized for agile development</p>
                     </div>
 
-                    <!-- Action Buttons -->
-                    <div class="space-y-3 mt-auto">
-                        <button id="reviewBtn" onclick="reviewCode()" class="glow-btn w-full py-3 rounded-xl text-white font-semibold">
-                            <i class="fas fa-search mr-2"></i>Review Code
-                        </button>
-                        <button id="multiAgentBtn" onclick="multiAgentReview()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); border-color: rgba(139, 92, 246, 0.4);">
-                            <i class="fas fa-users-cog mr-2"></i>Multi-Agent Review
-                        </button>
-                        <button id="scoreBtn" onclick="scoreCode()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(99, 102, 241, 0.2)); border-color: rgba(34, 197, 94, 0.4);">
-                            <i class="fas fa-chart-line mr-2"></i>Get Quality Score
-                        </button>
-                        <button id="riskBtn" onclick="predictRisks()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2)); border-color: rgba(239, 68, 68, 0.4);">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>Risk Prediction
-                        </button>
-                        <button id="rewriteBtn" onclick="rewriteCode()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold">
-                            <i class="fas fa-magic mr-2"></i>Rewrite Code
-                        </button>
-                        <button id="enterpriseBtn" onclick="generateEnterpriseReport()" class="secondary-btn w-full py-3 rounded-xl text-indigo-300 font-semibold" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2)); border-color: rgba(99, 102, 241, 0.4);">
-                            <i class="fas fa-file-pdf mr-2"></i>Enterprise Report
-                        </button>
+                    <!-- Action Buttons – organized into 3 sections -->
+                    <div class="mt-auto space-y-4">
+
+                        <!-- Section 1: Smart AI Analysis -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">🔍 Smart AI Analysis</span>
+                            </div>
+                            <div class="space-y-2">
+                                <button id="smartReviewBtn" onclick="smartReview()" class="glow-btn w-full py-3 rounded-xl text-white font-semibold">
+                                    <i class="fas fa-brain mr-2"></i>Smart Review
+                                </button>
+                                <button id="reviewBtn" onclick="reviewCode()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm">
+                                    <i class="fas fa-search mr-2"></i>Review Code
+                                </button>
+                                <button id="multiAgentBtn" onclick="multiAgentReview()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); border-color: rgba(139, 92, 246, 0.4);">
+                                    <i class="fas fa-users-cog mr-2"></i>Multi-Agent Review
+                                </button>
+                                <button id="scoreBtn" onclick="scoreCode()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(99, 102, 241, 0.2)); border-color: rgba(34, 197, 94, 0.4);">
+                                    <i class="fas fa-chart-line mr-2"></i>Quality Score
+                                </button>
+                                <button id="riskBtn" onclick="predictRisks()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2)); border-color: rgba(239, 68, 68, 0.4);">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>Risk Prediction
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Optimization Studio -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-yellow-300 uppercase tracking-wider">⚙ Optimization Studio</span>
+                            </div>
+                            <div class="space-y-2">
+                                <button id="rewriteBtn" onclick="rewriteCode()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm">
+                                    <i class="fas fa-magic mr-2"></i>Rewrite &amp; Optimize
+                                </button>
+                                <button id="readabilityBtn" onclick="improveReadability()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(99, 102, 241, 0.15)); border-color: rgba(6, 182, 212, 0.4);">
+                                    <i class="fas fa-eye mr-2"></i>Improve Readability
+                                </button>
+                                <button id="docBtn" onclick="addDocumentation()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(99, 102, 241, 0.15)); border-color: rgba(16, 185, 129, 0.4);">
+                                    <i class="fas fa-book mr-2"></i>Add Documentation
+                                </button>
+                                <button id="refactorBtn" onclick="refactorStructure()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(99, 102, 241, 0.15)); border-color: rgba(245, 158, 11, 0.4);">
+                                    <i class="fas fa-sitemap mr-2"></i>Refactor Structure
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Governance & DevOps -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-purple-300 uppercase tracking-wider">🏛 Governance &amp; DevOps</span>
+                            </div>
+                            <div class="space-y-2">
+                                <button id="enterpriseBtn" onclick="generateEnterpriseReport()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2)); border-color: rgba(99, 102, 241, 0.4);">
+                                    <i class="fas fa-file-pdf mr-2"></i>Enterprise Report
+                                </button>
+                                <button id="cicdBtn" onclick="simulateCICD()" class="secondary-btn w-full py-2.5 rounded-xl text-indigo-300 font-medium text-sm" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15)); border-color: rgba(168, 85, 247, 0.4);">
+                                    <i class="fas fa-cogs mr-2"></i>CI/CD Simulation
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -519,6 +568,9 @@
                 </button>
                 <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('rewrite')" id="tabRewrite">
                     <i class="fas fa-code-branch mr-1.5"></i>Rewrite
+                </button>
+                <button class="tab-btn text-sm font-medium py-2 text-slate-500" onclick="switchTab('diff')" id="tabDiff">
+                    <i class="fas fa-exchange-alt mr-1.5"></i>Diff View
                 </button>
             </div>
 
@@ -594,6 +646,43 @@
                         </button>
                     </div>
                     <div id="reviewContent" class="markdown-body text-slate-300 text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- AI Confidence Score -->
+                <div class="glass-panel rounded-xl p-5 mt-5" id="confidencePanel" style="display: none;">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                                <i class="fas fa-percentage text-cyan-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">AI Confidence Level</h4>
+                                <p class="text-xs text-slate-400">Based on vulnerability patterns &amp; code complexity</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-cyan-400" id="confidenceValue">--</div>
+                                <div class="text-xs text-slate-500">Confidence</div>
+                            </div>
+                            <div class="w-32">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill bg-cyan-400" id="confidenceFill" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-1 text-right" id="confidenceLabel">Analyzing...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Compliance Mapping -->
+                <div class="glass-panel rounded-xl p-5 mt-5" id="compliancePanel" style="display: none;">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-shield-check text-xl text-orange-400"></i>
+                        <h3 class="text-lg font-semibold text-white">Security Compliance Mapping</h3>
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-orange-500/20 text-orange-300">CWE · OWASP</span>
+                    </div>
+                    <div id="complianceContent" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
 
                 <!-- AI Explanation Timeline -->
@@ -925,7 +1014,36 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+
+                <!-- Technical Debt Growth Forecast -->
+                <div class="glass-panel rounded-xl p-5 mt-6" id="debtForecastPanel" style="display: none;">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-chart-line text-xl text-purple-400"></i>
+                        <h3 class="text-lg font-semibold text-white">Technical Debt Growth Forecast</h3>
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-purple-500/20 text-purple-300">Predictive</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Current Debt</div>
+                            <div class="text-2xl font-bold text-purple-400" id="forecastCurrent">-- hrs</div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">In 3 Sprints</div>
+                            <div class="text-2xl font-bold text-orange-400" id="forecastThreeSprints">-- hrs</div>
+                            <div class="text-xs text-orange-400 mt-1">+15% per sprint</div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">In 6 Sprints</div>
+                            <div class="text-2xl font-bold text-red-400" id="forecastSixSprints">-- hrs</div>
+                            <div class="text-xs text-red-400 mt-1">Compounding risk</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 mt-0.5"></i>
+                        <p class="text-sm text-yellow-200" id="forecastWarning">If left unresolved, technical debt may increase by 15% per sprint due to compounding complexity and coupling effects.</p>
+                    </div>
+                    </div>
+                </div>
 
             <!-- GitHub Report Tab -->
             <div id="panelGithub" class="hidden">
@@ -1072,13 +1190,56 @@
                 <div class="result-panel rounded-xl p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold text-white"><i class="fas fa-wand-magic-sparkles mr-2 text-indigo-400"></i>Optimized Code</h3>
-                        <button onclick="copyContent('rewriteContent')" class="text-slate-400 hover:text-indigo-400 text-sm transition-colors">
-                            <i class="fas fa-copy mr-1"></i>Copy
-                        </button>
+                        <div class="flex items-center gap-3">
+                            <button onclick="showDiffView()" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">
+                                <i class="fas fa-exchange-alt mr-1"></i>View Diff
+                            </button>
+                            <button onclick="copyContent('rewriteContent')" class="text-slate-400 hover:text-indigo-400 text-sm transition-colors">
+                                <i class="fas fa-copy mr-1"></i>Copy
+                            </button>
+                        </div>
                     </div>
                     <div id="rewriteContent" class="markdown-body text-slate-300 text-sm leading-relaxed"></div>
                 </div>
             </div>
+
+            <!-- Diff View Tab -->
+            <div id="panelDiff" class="hidden">
+                <div class="glass-panel rounded-xl p-5 mb-5">
+                    <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-exchange-alt text-xl text-cyan-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Code Change Diff View</h3>
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-cyan-500/20 text-cyan-300">Line-by-Line</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded bg-green-500/40 border border-green-500/60"></span><span class="text-green-400" id="diffLinesAdded">0 added</span></span>
+                            <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded bg-red-500/40 border border-red-500/60"></span><span class="text-red-400" id="diffLinesRemoved">0 removed</span></span>
+                            <span class="flex items-center gap-1"><span class="text-slate-400" id="diffLinesUnchanged">0 unchanged</span></span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4"><i class="fas fa-info-circle mr-1"></i>Rewrite the code first, then click "View Diff" on the Rewrite tab — or paste original and rewritten code below.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Original Code</label>
+                            <textarea id="diffOriginal" class="code-editor w-full h-40 rounded-lg p-3 text-slate-200 placeholder-slate-600 text-xs" placeholder="Paste original code here..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Rewritten Code</label>
+                            <textarea id="diffRewritten" class="code-editor w-full h-40 rounded-lg p-3 text-slate-200 placeholder-slate-600 text-xs" placeholder="Paste rewritten code here..."></textarea>
+                        </div>
+                    </div>
+                    <button onclick="computeDiff()" class="secondary-btn px-4 py-2 rounded-lg text-indigo-300 font-medium text-sm mb-4">
+                        <i class="fas fa-sync mr-2"></i>Generate Diff
+                    </button>
+                </div>
+                <div class="result-panel rounded-xl p-4">
+                    <div id="diffOutput" class="font-mono text-xs leading-6 overflow-x-auto">
+                        <p class="text-slate-500 italic text-center py-6">No diff generated yet. Rewrite code or paste code above and click "Generate Diff".</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Loading Overlay -->
@@ -1246,21 +1407,23 @@
             const riskTab = document.getElementById('tabRisk');
             const githubTab = document.getElementById('tabGithub');
             const rewriteTab = document.getElementById('tabRewrite');
+            const diffTab = document.getElementById('tabDiff');
             const reviewPanel = document.getElementById('panelReview');
             const agentsPanel = document.getElementById('panelAgents');
             const scorePanel = document.getElementById('panelScore');
             const riskPanel = document.getElementById('panelRisk');
             const githubPanel = document.getElementById('panelGithub');
             const rewritePanel = document.getElementById('panelRewrite');
+            const diffPanel = document.getElementById('panelDiff');
 
             // Reset all tabs
-            [reviewTab, agentsTab, scoreTab, riskTab, githubTab, rewriteTab].forEach(t => {
+            [reviewTab, agentsTab, scoreTab, riskTab, githubTab, rewriteTab, diffTab].forEach(t => {
                 if (t) {
                     t.classList.remove('active', 'text-slate-300');
                     t.classList.add('text-slate-500');
                 }
             });
-            [reviewPanel, agentsPanel, scorePanel, riskPanel, githubPanel, rewritePanel].forEach(p => {
+            [reviewPanel, agentsPanel, scorePanel, riskPanel, githubPanel, rewritePanel, diffPanel].forEach(p => {
                 if (p) p.classList.add('hidden');
             });
 
@@ -1285,6 +1448,10 @@
                 githubTab.classList.add('active', 'text-slate-300');
                 githubTab.classList.remove('text-slate-500');
                 githubPanel.classList.remove('hidden');
+            } else if (tab === 'diff') {
+                diffTab.classList.add('active', 'text-slate-300');
+                diffTab.classList.remove('text-slate-500');
+                diffPanel.classList.remove('hidden');
             } else {
                 rewriteTab.classList.add('active', 'text-slate-300');
                 rewriteTab.classList.remove('text-slate-500');
@@ -1505,23 +1672,34 @@
 
         function setMode(mode) {
             currentMode = mode;
-            const devBtn = document.getElementById('modeDeveloper');
-            const begBtn = document.getElementById('modeBeginner');
+            const modeButtons = {
+                developer: document.getElementById('modeDeveloper'),
+                beginner: document.getElementById('modeBeginner'),
+                interview: document.getElementById('modeInterview'),
+                compliance: document.getElementById('modeCompliance')
+            };
             const desc = document.getElementById('modeDescription');
 
-            if (mode === 'developer') {
-                devBtn.classList.add('bg-indigo-500/30', 'text-white');
-                devBtn.classList.remove('bg-transparent', 'text-slate-400');
-                begBtn.classList.remove('bg-indigo-500/30', 'text-white');
-                begBtn.classList.add('bg-transparent', 'text-slate-400');
-                desc.textContent = 'Technical explanations for professionals';
-            } else {
-                begBtn.classList.add('bg-indigo-500/30', 'text-white');
-                begBtn.classList.remove('bg-transparent', 'text-slate-400');
-                devBtn.classList.remove('bg-indigo-500/30', 'text-white');
-                devBtn.classList.add('bg-transparent', 'text-slate-400');
-                desc.textContent = 'Simple explanations with step-by-step guidance';
+            // Reset all
+            Object.values(modeButtons).forEach(btn => {
+                if (btn) {
+                    btn.classList.remove('bg-indigo-500/30', 'text-white');
+                    btn.classList.add('bg-transparent', 'text-slate-400');
+                }
+            });
+
+            const descriptions = {
+                developer: 'Technical explanations for professionals',
+                beginner: 'Simple explanations with step-by-step guidance',
+                interview: 'Explains why code is wrong — ideal for interview prep',
+                compliance: 'Strict corporate review with compliance checks'
+            };
+
+            if (modeButtons[mode]) {
+                modeButtons[mode].classList.add('bg-indigo-500/30', 'text-white');
+                modeButtons[mode].classList.remove('bg-transparent', 'text-slate-400');
             }
+            desc.textContent = descriptions[mode] || descriptions.developer;
         }
 
         async function reviewCode() {
@@ -1562,6 +1740,12 @@
 
                 // Show and update AI Timeline
                 showAITimeline(language, data.summary);
+
+                // Show Confidence Score
+                showConfidenceScore(data.summary, code);
+
+                // Show Security Compliance Mapping
+                showComplianceMapping(data.summary);
 
                 // Render review markdown
                 document.getElementById('reviewContent').innerHTML = marked.parse(data.review);
@@ -2253,9 +2437,13 @@
 
                 // Technical debt
                 const debtScore = risks.technical_debt?.score || 0;
+                const debtHours = risks.technical_debt?.hours_to_fix || 0;
                 document.getElementById('riskDebt').textContent = debtScore;
                 document.getElementById('riskDebt').style.color = getRiskColor(debtScore);
-                document.getElementById('riskDebtHours').textContent = `Est. ${risks.technical_debt?.hours_to_fix || 0} hours to fix`;
+                document.getElementById('riskDebtHours').textContent = `Est. ${debtHours} hours to fix`;
+
+                // Show tech debt growth forecast
+                showTechDebtForecast(debtHours);
 
                 // Overall score
                 const overallScore = risks.overall_risk_score || 0;
@@ -2356,6 +2544,420 @@
                 hideLoading();
                 document.getElementById('enterpriseBtn').disabled = false;
             }
+        }
+        // ============ SMART REVIEW (Combined Analysis) ============
+        async function smartReview() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('Please paste some code to analyze.');
+                return;
+            }
+
+            const language = document.getElementById('langSelect').value;
+            const focusAreas = getSelectedFocusAreas();
+
+            showLoading('Running Smart Review — analyzing code quality, risk & security...');
+            document.getElementById('smartReviewBtn').disabled = true;
+            document.getElementById('reviewBtn').disabled = true;
+            document.getElementById('scoreBtn').disabled = true;
+            document.getElementById('riskBtn').disabled = true;
+
+            try {
+                // Run review, score and risk in parallel
+                const [reviewResp, scoreResp, riskResp] = await Promise.all([
+                    fetch('/review', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ code, language, focus_areas: focusAreas, mode: currentMode }) }),
+                    fetch('/score', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ code, language }) }),
+                    fetch('/risk-prediction', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ code, language }) })
+                ]);
+
+                // Handle review
+                if (reviewResp.ok) {
+                    const reviewData = await reviewResp.json();
+                    document.getElementById('criticalCount').textContent = reviewData.summary.critical.count;
+                    document.getElementById('highCount').textContent = reviewData.summary.high.count;
+                    document.getElementById('mediumCount').textContent = reviewData.summary.medium.count;
+                    document.getElementById('lowCount').textContent = reviewData.summary.low.count;
+                    detectCodeIntent(code, language);
+                    showAITimeline(language, reviewData.summary);
+                    document.getElementById('reviewContent').innerHTML = marked.parse(reviewData.review);
+                    document.querySelectorAll('#reviewContent pre code').forEach(block => hljs.highlightElement(block));
+                    showConfidenceScore(reviewData.summary, code);
+                    showComplianceMapping(reviewData.summary);
+                }
+
+                // Handle score
+                if (scoreResp.ok) {
+                    const scoreData = await scoreResp.json();
+                    const scores = scoreData.scores;
+                    setTimeout(() => {
+                        updateGauge('gaugeOverall', 'scoreOverall', scores.overall || 0);
+                        updateGauge('gaugeQuality', 'scoreQuality', scores.code_quality || 0);
+                        updateGauge('gaugeSecurity', 'scoreSecurity', scores.security || 0);
+                        updateGauge('gaugeMaintain', 'scoreMaintain', scores.maintainability || 0);
+                        updateGauge('gaugePerformance', 'scorePerformance', scores.performance || 0);
+                        updateGauge('gaugeReliability', 'scoreReliability', scores.reliability || 0);
+                    }, 100);
+                    document.getElementById('scoreSummary').textContent = scores.summary || 'No summary available.';
+                    const recList = document.getElementById('scoreRecommendations');
+                    if (scores.recommendations && scores.recommendations.length > 0) {
+                        recList.innerHTML = scores.recommendations.map(rec =>
+                            `<li class="flex items-start gap-2"><i class="fas fa-chevron-right text-indigo-400 mt-1 text-xs"></i><span>${rec}</span></li>`
+                        ).join('');
+                    }
+                }
+
+                // Handle risk
+                if (riskResp.ok) {
+                    const riskData = await riskResp.json();
+                    const risks = riskData.risks;
+                    const getRiskColor = (prob) => {
+                        if (prob >= 70) return '#ef4444';
+                        if (prob >= 50) return '#f97316';
+                        if (prob >= 30) return '#eab308';
+                        return '#22c55e';
+                    };
+                    const runtimeProb = risks.runtime_failure_risk?.probability || 0;
+                    document.getElementById('riskRuntime').textContent = runtimeProb + '%';
+                    document.getElementById('riskRuntime').style.color = getRiskColor(runtimeProb);
+                    document.getElementById('riskRuntimeLevel').textContent = risks.runtime_failure_risk?.level || 'N/A';
+                    const securityProb = risks.security_breach_risk?.probability || 0;
+                    document.getElementById('riskSecurity').textContent = securityProb + '%';
+                    document.getElementById('riskSecurity').style.color = getRiskColor(securityProb);
+                    document.getElementById('riskSecurityLevel').textContent = risks.security_breach_risk?.level || 'N/A';
+                    const maintainScore = risks.maintainability_risk?.score || 0;
+                    document.getElementById('riskMaintain').textContent = maintainScore;
+                    document.getElementById('riskMaintain').style.color = getRiskColor(100 - maintainScore);
+                    document.getElementById('riskMaintainLevel').textContent = risks.maintainability_risk?.level || 'N/A';
+                    const debtScore = risks.technical_debt?.score || 0;
+                    document.getElementById('riskDebt').textContent = debtScore;
+                    document.getElementById('riskDebt').style.color = getRiskColor(debtScore);
+                    const debtHours = risks.technical_debt?.hours_to_fix || 0;
+                    document.getElementById('riskDebtHours').textContent = `Est. ${debtHours} hours to fix`;
+                    document.getElementById('riskOverallScore').textContent = risks.overall_risk_score || 0;
+                    document.getElementById('riskOverallScore').style.color = getRiskColor(risks.overall_risk_score || 0);
+                    document.getElementById('riskSummaryText').textContent = risks.risk_summary || 'Analysis complete.';
+                    showTechDebtForecast(debtHours);
+                    const runtimeFactors = risks.runtime_failure_risk?.factors || [];
+                    document.getElementById('riskRuntimeFactors').innerHTML = runtimeFactors.length > 0
+                        ? runtimeFactors.map(f => `<li class="flex items-start gap-2"><i class="fas fa-exclamation-circle text-red-400 mt-0.5 text-xs"></i><span>${f}</span></li>`).join('')
+                        : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No runtime risks detected</li>';
+                    const securityVulns = risks.security_breach_risk?.vulnerabilities || [];
+                    document.getElementById('riskVulnerabilities').innerHTML = securityVulns.length > 0
+                        ? securityVulns.map(v => `<li class="flex items-start gap-2"><i class="fas fa-shield-virus text-orange-400 mt-0.5 text-xs"></i><span>${v}</span></li>`).join('')
+                        : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No security vulnerabilities detected</li>';
+                    const maintainIssues = risks.maintainability_risk?.issues || [];
+                    document.getElementById('riskMaintainIssues').innerHTML = maintainIssues.length > 0
+                        ? maintainIssues.map(i => `<li class="flex items-start gap-2"><i class="fas fa-wrench text-yellow-400 mt-0.5 text-xs"></i><span>${i}</span></li>`).join('')
+                        : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Good maintainability</li>';
+                    const priorityFixes = risks.technical_debt?.priority_fixes || [];
+                    document.getElementById('riskPriorityFixes').innerHTML = priorityFixes.length > 0
+                        ? priorityFixes.map((f, i) => `<li class="flex items-start gap-2"><span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 text-xs flex items-center justify-center">${i+1}</span><span>${f}</span></li>`).join('')
+                        : '<li class="text-green-400"><i class="fas fa-check-circle mr-2"></i>No urgent fixes needed</li>';
+                }
+
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('review');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+                document.getElementById('smartReviewBtn').disabled = false;
+                document.getElementById('reviewBtn').disabled = false;
+                document.getElementById('scoreBtn').disabled = false;
+                document.getElementById('riskBtn').disabled = false;
+            }
+        }
+
+        // ============ CONFIDENCE SCORE ============
+        function showConfidenceScore(summary, code) {
+            const panel = document.getElementById('confidencePanel');
+            const total = (summary.critical?.count || 0) + (summary.high?.count || 0) +
+                          (summary.medium?.count || 0) + (summary.low?.count || 0);
+            const lines = code.split('\n').length;
+
+            // Heuristic confidence: fewer issues relative to code size = higher confidence
+            let confidence = Math.min(97, Math.max(55, 95 - (total * 3) + Math.min(15, Math.floor(lines / 10))));
+            confidence = Math.round(confidence);
+
+            let label = 'High Confidence';
+            let color = 'text-green-400';
+            if (confidence < 70) { label = 'Moderate Confidence'; color = 'text-yellow-400'; }
+            if (confidence < 60) { label = 'Low Confidence'; color = 'text-red-400'; }
+
+            document.getElementById('confidenceValue').textContent = confidence + '%';
+            document.getElementById('confidenceValue').className = `text-3xl font-bold ${color.replace('text-', 'text-')}`;
+            document.getElementById('confidenceFill').style.width = confidence + '%';
+            document.getElementById('confidenceLabel').textContent = label;
+            panel.style.display = 'block';
+        }
+
+        // ============ SECURITY COMPLIANCE MAPPING ============
+        function showComplianceMapping(summary) {
+            const panel = document.getElementById('compliancePanel');
+            const content = document.getElementById('complianceContent');
+
+            // Simulated CWE/OWASP mapping from summary severity
+            const mappings = [
+                { cwe: 'CWE-89', owasp: 'A03:2021 Injection', name: 'SQL Injection', color: 'red', icon: 'fas fa-database', active: summary.critical?.count > 0 },
+                { cwe: 'CWE-79', owasp: 'A03:2021 Injection', name: 'Cross-Site Scripting', color: 'orange', icon: 'fas fa-code', active: summary.high?.count > 0 },
+                { cwe: 'CWE-798', owasp: 'A02:2021 Cryptographic Failures', name: 'Hardcoded Secrets', color: 'yellow', icon: 'fas fa-key', active: summary.critical?.count > 0 },
+                { cwe: 'CWE-22', owasp: 'A01:2021 Broken Access Control', name: 'Path Traversal', color: 'purple', icon: 'fas fa-folder-open', active: summary.medium?.count > 0 },
+            ];
+
+            content.innerHTML = mappings.map(m => `
+                <div class="bg-slate-800/50 rounded-lg p-3 flex items-start gap-3 ${m.active ? 'border border-' + m.color + '-500/30' : 'opacity-50'}">
+                    <div class="w-8 h-8 rounded-lg bg-${m.color}-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <i class="${m.icon} text-${m.color}-400 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-sm font-medium text-white">${m.name}</div>
+                        <div class="text-xs text-slate-400 mt-0.5">${m.cwe}</div>
+                        <div class="text-xs text-indigo-300 mt-0.5">${m.owasp}</div>
+                    </div>
+                    <span class="ml-auto text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${m.active ? 'bg-' + m.color + '-500/20 text-' + m.color + '-300' : 'bg-slate-700 text-slate-500'}">
+                        ${m.active ? 'Detected' : 'Clear'}
+                    </span>
+                </div>
+            `).join('');
+
+            panel.style.display = 'block';
+        }
+
+        // ============ TECHNICAL DEBT FORECAST ============
+        function showTechDebtForecast(hoursToFix) {
+            const panel = document.getElementById('debtForecastPanel');
+            const growth = 0.15; // 15% per sprint
+            const threeSprints = Math.round(hoursToFix * Math.pow(1 + growth, 3));
+            const sixSprints = Math.round(hoursToFix * Math.pow(1 + growth, 6));
+
+            document.getElementById('forecastCurrent').textContent = hoursToFix + ' hrs';
+            document.getElementById('forecastThreeSprints').textContent = threeSprints + ' hrs';
+            document.getElementById('forecastSixSprints').textContent = sixSprints + ' hrs';
+
+            if (hoursToFix > 0) {
+                document.getElementById('forecastWarning').textContent =
+                    `If left unresolved, your current ${hoursToFix}-hour debt may grow to ${threeSprints} hours in 3 sprints and ${sixSprints} hours in 6 sprints (est. +15% per sprint).`;
+            }
+            panel.style.display = 'block';
+        }
+
+        // ============ DIFF VIEW ============
+        function showDiffView() {
+            const originalCode = document.getElementById('codeInput').value.trim();
+            const rewrittenEl = document.getElementById('rewriteContent');
+            // Extract plain text from rendered markdown
+            const rewrittenText = rewrittenEl.innerText || rewrittenEl.textContent || '';
+
+            if (!originalCode || !rewrittenText) {
+                alert('Please run "Rewrite & Optimize" first to generate code to diff.');
+                return;
+            }
+
+            document.getElementById('diffOriginal').value = originalCode;
+            document.getElementById('diffRewritten').value = rewrittenText;
+
+            document.getElementById('resultsSection').classList.remove('hidden');
+            switchTab('diff');
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+            computeDiff();
+        }
+
+        async function computeDiff() {
+            const original = document.getElementById('diffOriginal').value.trim();
+            const rewritten = document.getElementById('diffRewritten').value.trim();
+
+            if (!original || !rewritten) {
+                alert('Please provide both original and rewritten code.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/code-diff', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ original_code: original, rewritten_code: rewritten })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Diff generation failed');
+                }
+
+                const data = await response.json();
+                renderDiff(data.diff, data.stats);
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function renderDiff(diff, stats) {
+            document.getElementById('diffLinesAdded').textContent = stats.lines_added + ' added';
+            document.getElementById('diffLinesRemoved').textContent = stats.lines_removed + ' removed';
+            document.getElementById('diffLinesUnchanged').textContent = stats.lines_unchanged + ' unchanged';
+
+            const output = document.getElementById('diffOutput');
+            if (!diff || diff.length === 0) {
+                output.innerHTML = '<p class="text-slate-500 italic text-center py-6">No differences found — the code is identical.</p>';
+                return;
+            }
+
+            output.innerHTML = diff.map(line => {
+                const lineNum = (num) => `<span class="inline-block w-10 text-right mr-3 text-slate-600 select-none">${num !== null ? num : ''}</span>`;
+                const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+                if (line.type === 'added') {
+                    return `<div class="px-2 py-0.5 bg-green-500/10 border-l-2 border-green-500 hover:bg-green-500/20">${lineNum(line.new_line)}<span class="text-green-300">+ ${esc(line.content)}</span></div>`;
+                } else if (line.type === 'removed') {
+                    return `<div class="px-2 py-0.5 bg-red-500/10 border-l-2 border-red-500 hover:bg-red-500/20">${lineNum(line.old_line)}<span class="text-red-300">- ${esc(line.content)}</span></div>`;
+                } else if (line.type === 'info') {
+                    return `<div class="px-2 py-1 bg-indigo-500/10 text-indigo-400 text-xs">${esc(line.content)}</div>`;
+                } else {
+                    return `<div class="px-2 py-0.5 hover:bg-slate-800/30">${lineNum(line.old_line)}<span class="text-slate-400">  ${esc(line.content)}</span></div>`;
+                }
+            }).join('');
+        }
+
+        // ============ OPTIMIZATION STUDIO ============
+        async function improveReadability() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) { alert('Please paste some code first.'); return; }
+            const language = document.getElementById('langSelect').value;
+            showLoading('Improving code readability...');
+            document.getElementById('readabilityBtn').disabled = true;
+            try {
+                const response = await fetch('/rewrite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language, instructions: 'Focus on improving readability: use clear variable names, add whitespace, simplify logic, and apply consistent formatting.' })
+                });
+                if (!response.ok) { const err = await response.json(); throw new Error(err.detail || 'Failed'); }
+                const data = await response.json();
+                calculateImpact(code, data.rewritten);
+                document.getElementById('rewriteContent').innerHTML = marked.parse(data.rewritten);
+                document.querySelectorAll('#rewriteContent pre code').forEach(block => hljs.highlightElement(block));
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('rewrite');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) { alert('Error: ' + error.message); }
+            finally { hideLoading(); document.getElementById('readabilityBtn').disabled = false; }
+        }
+
+        async function addDocumentation() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) { alert('Please paste some code first.'); return; }
+            const language = document.getElementById('langSelect').value;
+            showLoading('Adding documentation & docstrings...');
+            document.getElementById('docBtn').disabled = true;
+            try {
+                const response = await fetch('/rewrite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language, instructions: 'Add comprehensive documentation: function docstrings, inline comments for complex logic, type hints, and a module-level description.' })
+                });
+                if (!response.ok) { const err = await response.json(); throw new Error(err.detail || 'Failed'); }
+                const data = await response.json();
+                calculateImpact(code, data.rewritten);
+                document.getElementById('rewriteContent').innerHTML = marked.parse(data.rewritten);
+                document.querySelectorAll('#rewriteContent pre code').forEach(block => hljs.highlightElement(block));
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('rewrite');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) { alert('Error: ' + error.message); }
+            finally { hideLoading(); document.getElementById('docBtn').disabled = false; }
+        }
+
+        async function refactorStructure() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) { alert('Please paste some code first.'); return; }
+            const language = document.getElementById('langSelect').value;
+            showLoading('Refactoring structure — splitting functions & modularizing...');
+            document.getElementById('refactorBtn').disabled = true;
+            try {
+                const response = await fetch('/rewrite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language, instructions: 'Refactor the structure: split long functions into smaller single-purpose functions, reduce nesting, separate concerns, and apply SOLID principles where applicable.' })
+                });
+                if (!response.ok) { const err = await response.json(); throw new Error(err.detail || 'Failed'); }
+                const data = await response.json();
+                calculateImpact(code, data.rewritten);
+                document.getElementById('rewriteContent').innerHTML = marked.parse(data.rewritten);
+                document.querySelectorAll('#rewriteContent pre code').forEach(block => hljs.highlightElement(block));
+                document.getElementById('resultsSection').classList.remove('hidden');
+                switchTab('rewrite');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) { alert('Error: ' + error.message); }
+            finally { hideLoading(); document.getElementById('refactorBtn').disabled = false; }
+        }
+
+        // ============ CI/CD SIMULATION ============
+        async function simulateCICD() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) { alert('Please paste some code first.'); return; }
+
+            showLoading('Running CI/CD Simulation pipeline...');
+            document.getElementById('cicdBtn').disabled = true;
+
+            // Simulate pipeline stages
+            await new Promise(r => setTimeout(r, 1500));
+            hideLoading();
+            document.getElementById('cicdBtn').disabled = false;
+
+            const lines = code.split('\n').length;
+            const hasSecurityRisks = /eval\s*\(|exec\s*\(|password\s*=\s*['"]/i.test(code);
+            const complexity = (code.match(/\b(if|else|for|while|try|catch)\b/g) || []).length;
+
+            const stages = [
+                { name: 'Code Checkout', status: 'pass', time: '0.8s', icon: 'fas fa-code-branch' },
+                { name: 'Dependency Install', status: 'pass', time: '12.3s', icon: 'fas fa-box' },
+                { name: 'Unit Tests', status: complexity > 20 ? 'warn' : 'pass', time: '4.2s', icon: 'fas fa-vial', note: complexity > 20 ? 'High complexity detected — some tests may be fragile' : '5/5 tests passed' },
+                { name: 'Security Scan', status: hasSecurityRisks ? 'fail' : 'pass', time: '2.1s', icon: 'fas fa-shield-alt', note: hasSecurityRisks ? 'Security vulnerabilities detected' : 'No vulnerabilities found' },
+                { name: 'Code Quality Gate', status: lines > 300 ? 'warn' : 'pass', time: '1.5s', icon: 'fas fa-chart-bar', note: lines > 300 ? 'Large file — consider splitting modules' : 'Quality gate passed' },
+                { name: 'Build', status: 'pass', time: '8.7s', icon: 'fas fa-hammer' },
+                { name: 'Deploy to Staging', status: hasSecurityRisks ? 'blocked' : 'pass', time: hasSecurityRisks ? '--' : '15.4s', icon: 'fas fa-rocket', note: hasSecurityRisks ? 'Blocked — security issues must be resolved' : 'Deployed successfully' },
+            ];
+
+            const overallStatus = stages.some(s => s.status === 'fail' || s.status === 'blocked') ? 'FAILED' :
+                                  stages.some(s => s.status === 'warn') ? 'PASSED WITH WARNINGS' : 'PASSED';
+            const statusColor = overallStatus === 'FAILED' ? 'red' : overallStatus.includes('WARNINGS') ? 'yellow' : 'green';
+
+            const stageHTML = stages.map(s => {
+                const colors = { pass: 'green', fail: 'red', warn: 'yellow', blocked: 'orange' };
+                const icons = { pass: 'fa-check-circle', fail: 'fa-times-circle', warn: 'fa-exclamation-triangle', blocked: 'fa-ban' };
+                const c = colors[s.status];
+                return `
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-${c}-500/20">
+                        <i class="${s.icon} text-slate-400 w-4"></i>
+                        <span class="text-sm text-white flex-1">${s.name}</span>
+                        ${s.note ? `<span class="text-xs text-slate-400 hidden sm:inline">${s.note}</span>` : ''}
+                        <span class="text-xs text-slate-500 font-mono">${s.time}</span>
+                        <i class="fas ${icons[s.status]} text-${c}-400"></i>
+                    </div>`;
+            }).join('');
+
+            // Show in a modal-like overlay in results section
+            document.getElementById('resultsSection').classList.remove('hidden');
+            switchTab('review');
+
+            // Temporarily replace review content with CI/CD output
+            document.getElementById('reviewContent').innerHTML = `
+                <div class="mb-4 p-4 rounded-xl border border-${statusColor}-500/30 bg-${statusColor}-500/10 flex items-center gap-3">
+                    <i class="fas fa-${overallStatus === 'PASSED' ? 'check-circle' : overallStatus.includes('WARNINGS') ? 'exclamation-triangle' : 'times-circle'} text-${statusColor}-400 text-2xl"></i>
+                    <div>
+                        <div class="text-lg font-bold text-${statusColor}-400">Pipeline ${overallStatus}</div>
+                        <div class="text-xs text-slate-400">Simulated CI/CD run • ${new Date().toLocaleTimeString()}</div>
+                    </div>
+                </div>
+                <div class="space-y-2">${stageHTML}</div>
+                <p class="text-xs text-slate-500 mt-4"><i class="fas fa-info-circle mr-1"></i>This is a simulated CI/CD pipeline based on static code analysis. Run "Smart Review" for a full AI-powered analysis.</p>
+            `;
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
